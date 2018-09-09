@@ -1,60 +1,142 @@
-CSC 505, Homework 1
-Due date: Monday, September 10, 9:00 PM
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
 
-Homework should be submitted via Moodle in PDF, or plain text. To avoid reduced marks, please submit word/latex-formated PDF file, NOT scanned writing in pdf format. All assignments are due on 9 PM of the due date. Late homework will be accepted only in circumstances that are grounds for excused absence under university policy. The university provides mechanisms for documenting such reasons (severe illness, death in the family, etc.). Arrangements for turning in late homework must be made by the day preceding the due date if possible.
+\documentclass[12pt]{article}
 
-All assignments for this course are intended to be individual work. Turning in an assignment which is not your own work is cheating. The Internet is not an allowed resource! Copying of text, code or other content from the Internet (or other sources) is plagiarism. Any tool/resource must be approved in advance by the instructor and identified and acknowledged clearly in any work turned in, anything else is plagiarism.
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usepackage{mathtools}
 
-If an academic integrity violation occurs, the offending student(s) will be assessed a penalty that is at least as severe as getting a 0 for the whole homework for which the violation occurred, and the case will be reported to the Office of Student Conduct.
+\usepackage{graphicx}
+\graphicspath{ {images/} }
 
-Instructions about how to “give/describe” an algorithm (taken from Erik Demaine): Try to be concise, correct, and complete. To avoid deductions, you should provide (1) a textual description of the algorithm, and, if helpful, flow charts and pseudocode; (2) at least one worked example or diagram to illustrate how your algorithm works; (3) a proof (or other indication) of the correctness of the algorithm; and (4) an analysis of the time complexity (and, if relevant, the space complexity) of the algorithm. Remember that, above all else, your goal is to communicate. If a grader cannot understand your solution, they cannot give you appropriate credit for it.
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 
-In this assignment, the function lg indicates the binary logarithm, ln indicates the natural logarithm.
+\usetikzlibrary{arrows}
 
-1. (12 points) Purpose: Learn about Horner’s rule and practice how loop invariants are used to prove the correctness of an algorithm. Please re-read Section 2.1 in our textbook and solve problem 2-3 on page 41 of the textbook.
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
 
-2. (13 points) Purpose: Practice counting basic operations and analyzing algorithms. Assume n > 0 and consider the following algorithm.
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
 
-    (1) l  1
-    (2) k  0
-(3) for i  1 to n do
-(4)	l  ½ * l  * i
-(5)	if  k < n  do
-(6)		k  i * i * i + 2
-(7) return( k, l )
+\begin{document}
+	
+	% --------------------------------------------------------------
+	%                         Start here
+	% --------------------------------------------------------------
+	
+	%\renewcommand{\qedsymbol}{\filledbox}
+	
+	\title{Homework 1}%replace X with the appropriate number
+	\author{Bihan Zhang - bzhang28 %replace with your name
+		CSC 505} %if necessary, replace with your course title
+	
+	\maketitle
+	
+	
+	\begin{question}{1a} 
+	$\Theta(n)$
+	Reasoning: $y = a_i+ x  y$ gets executed once per loop iteration. So total number of executions is n, since the look executes 0-n times. 		
+	\end{question}
+
+	\begin{question}{1b} 
+	\end{question}
+		
+	\begin{question}{2a} 
+		For n = 1,2,3,4,5 what values for k and l are returned in line 7? How many multiplications (“*”) does the algorithm perform for computing these values? How many additions (“+”) does the algorithm perform for computing these values?\\
+		I assumed that an operation like $k \leftarrow i*i*i+2$ uses two multiplications and one addition	
+		
+		\begin{tabular}{|l|l|l|l|l|l|}
+			\hline
+			\textbf{n}                       & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} \\ \hline
+			\textit{\textbf{return value k}} & 3          & 3          & 3          & 10         & 10         \\ \hline
+			\textit{\textbf{return value l}} & .5         & .5         & .75        & 1.5        & 3.75       \\ \hline
+			\textbf{multiplications (*)}     & 4          & 6          & 8          & 12         & 14         \\ \hline
+			\textbf{additions (+)}           & 1          & 1          & 1          & 2          & 12         \\ \hline
+		\end{tabular}
+		
+	\end{question}
+
+	\begin{question}{2b}	
+		b) (2 points) As a function of n, what is the value of k returned in line 7? Justify your results.
+	\end{question}
+
+	\begin{question}{2c}	
+		c) (2 points) As a function of n, what is the value of l returned in line 7? Justify your results.
+		\end{question}
+
+\begin{question}{2d}	
+		d) (2 points) As a function of n, how many multiplications (“*”) does the algorithm perform? Justify your results.
+			\end{question}
+	
+\begin{question}{2e}	
+		d) (2 points) As a function of n, how many additions (“+”) does the algorithm perform? Justify your results.
+			\end{question}
+	
+\begin{question}{3a}
+		
+$n^{1/2}+999/n$ $\epsilon$ $\Omega(ln(n)+n)$\\
+
+$\lim_{n\to\infty} (sqrt(n) + 999/n)/(lng(n) + n) = 0$\\
+
+lg(n)+ n,	lg(n!),	n0.99lg(n),	nlg(n),	n1/2+999/n,	n1.01,		999n1/2
 
 
-a) (5 points) For n = 1,2,3,4,5 what values for k and l are returned in line 7? How many multiplications (“*”) does the algorithm perform for computing these values? How many additions (“+”) does the algorithm perform for computing these values?
-
-                            n  1  2  3  4  5
-Return value (k)
-
-Return value (l)
-
-# multiplications (“*”)
-
-# additions (“+”)
-
-
-b) (2 points) As a function of n, what is the value of k returned in line 7? Justify your results.
-c) (2 points) As a function of n, what is the value of l returned in line 7? Justify your results.
-d) (2 points) As a function of n, how many multiplications (“*”) does the algorithm perform? Justify your results.
-d) (2 points) As a function of n, how many additions (“+”) does the algorithm perform? Justify your results.
-
-3. (12 points) Purpose: Practice working with asymptotic notation. Rank the following functions by order of asymptotic growth; that is, find an arrangement g1, g2, … of the below functions with g1(g2), g2(g3) …. Mark the functions that are asymptotically equivalent, i.e. gk (gk+1) by a “*”. Justify your solution.
-
-a) lg(n)+ n,	lg(n!),	n0.99lg(n),	nlg(n),	n1/2+999/n,	n1.01,		999n1/2
-
-b) lg(n!),	100!,	n1.01,	2lg(n)+lg(n)+n1/3,		n1/3,	1+1/n,	 	lg(nn)
-
-4. (12 points) Prove or disprove rigorously (ie give values for c and n0 that will make your argument work) using the formal definitions of , ω (little-omega), and o (little-oh).
-a) (4 points) nlg(n) + n - 1000  ω( n )  (little-omega).
-b) (4 points) nlg(n) + n0.5 + n-1  ( nlg(n) ).
-c) (4 points) lg(n) o( ln(n3) ) (little-oh).
-
-5. (6 points) Purpose: Practice proving asymptotic relationships. In proving big-oh and big-omega bounds there is a relationship between the c that is used and the smallest n0 that will work (for O, the smaller the c, the larger the n0; for big-omega, the larger the c, the larger the n0). In each of the following situations, describe (the smallest integer) n0 as a function of c. You'll have to use the ceiling function to ensure that n0 is an integer. Your solution should also give you a lower bound (for big-oh) or an upper bound (for big-omega) on the constant c.
-(a) (3 points) Let f(n) = 5n4 - 7n3 and prove that f(n)  O(n4).
-(b) (3 points) Let f(n) = 2n4 + 4n3 and prove that f(n)  (n3).
-
-6. (6 points) Purpose: Practice how to design, analyze, and communicate algorithms. Describe an non-recursive Θ(lg n) algorithm which computes (a/2)2n, given a and n. You may assume that a is a positive real number, and n a positive integer, but do not assume that n is a power of 2. Please follow the above instructions for describing your algorithm. Please give both, a textual description and pseudocode of your algorithm, and justify the asymptotic running time of your algorithm.
-
+			\end{question}
+	
+\begin{question}{3b}	
+		b) lg(n!),	100!,	n1.01,	2lg(n)+lg(n)+n1/3,		n1/3,	1+1/n,	 	lg(nn)
+			\end{question}
+	
+\begin{question}{4a}	
+		4. (12 points) Prove or disprove rigorously (ie give values for c and n0 that will make your argument work) using the formal definitions of , ω (little-omega), and o (little-oh).
+		a) (4 points) nlg(n) + n - 1000  ω( n )  (little-omega).
+			\end{question}
+	
+\begin{question}{4b}	
+		b) (4 points) nlg(n) + n0.5 + n-1  ( nlg(n) ).
+			\end{question}
+	
+\begin{question}{4c}	
+		c) (4 points) lg(n) o( ln(n3) ) (little-oh).
+		
+			\end{question}
+	
+\begin{question}{5a}	
+		5. (6 points) Purpose: Practice proving asymptotic relationships. In proving big-oh and big-omega bounds there is a relationship between the c that is used and the smallest n0 that will work (for O, the smaller the c, the larger the n0; for big-omega, the larger the c, the larger the n0). In each of the following situations, describe (the smallest integer) n0 as a function of c. You'll have to use the ceiling function to ensure that n0 is an integer. Your solution should also give you a lower bound (for big-oh) or an upper bound (for big-omega) on the constant c.
+		(a) (3 points) Let f(n) = 5n4 - 7n3 and prove that f(n)  O(n4).
+			\end{question}
+	
+\begin{question}{5b}	
+		(b) (3 points) Let f(n) = 2n4 + 4n3 and prove that f(n)  (n3).
+			\end{question}
+	
+\begin{question}{6}	
+		6. (6 points) Purpose: Practice how to design, analyze, and communicate algorithms. Describe an non-recursive Θ(lg n) algorithm which computes (a/2)2n, given a and n. You may assume that a is a positive real number, and n a positive integer, but do not assume that n is a power of 2. Please follow the above instructions for describing your algorithm. Please give both, a textual description and pseudocode of your algorithm, and justify the asymptotic running time of your algorithm.
+		
+		
+	\end{question}
+	
+	\clearpage
+	
+	
+	% --------------------------------------------------------------
+	%     You don't have to mess with anything below this line.
+	% --------------------------------------------------------------
+	
+\end{document}
