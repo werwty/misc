@@ -9,6 +9,8 @@
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{tikz}
 \usepackage{mathtools}
+\usepackage{listings}
+
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
@@ -55,10 +57,40 @@
 	\end{question}
 
 	\begin{question}{1b} 
+	\begin{lstlisting}
+	
+		y=0
+		for i= range(0, n)
+		m= 1
+		for j= range(1, i)
+		m= m*x
+		y= a_i*m + y 
+		
+	\end{lstlisting}
+	
+	The running time of this is $\Theta(n^2)$ since there is one nested loop. Compared to Horner's rule the running time is longer.
+
 	\end{question}
 		
-	\begin{question}{2a} 
-		For n = 1,2,3,4,5 what values for k and l are returned in line 7? How many multiplications (“*”) does the algorithm perform for computing these values? How many additions (“+”) does the algorithm perform for computing these values?\\
+	\begin{question}{1c} 
+	Initialization: At the start of the loop i=n. 
+
+	$$y=\sum_{k=0}^{n-(n+1)}a_{k+n+1}x^k = \sum_{k=0}^{-1}a_{k+n+1}x^k = 0 $$ So the loop invariant holds prior to the first loop\\
+	
+	Maintenance: At an arbitrary ith iterations where $0<=i<n$.
+	$$y=a_i+x*y = a_i+x*\sum_{k=0}^{n-(i+1)}a_{k+i+1}x^k$$
+	$$=a_{i}x^{0}+\sum_{k=0}^{n-(i+1)}a_{k+i+1}x^{k+1}$$
+	$$=a_{i}x^{0}\sum_{k=1}^{n-i}a_{k+i}x^{k}$$	
+	$$=\sum_{k=0}^{n-i}a_{k+i}x^{k}$$
+	
+	The loop invariant holds.
+	
+	Termination: The loops terminate when $i=-1$:
+	$$y=\sum_{k=0}^{n-(-1)-1}a_{k-1+1}x^{k}=\sum_{k=0}^{n}a_{k}x^{k}$$
+	The invariant still holds, hence the algorithm is correct.
+	\end{question}	
+
+	\begin{question}{2a} 		
 		I assumed that an operation like $k \leftarrow i*i*i+2$ uses two multiplications and one addition	
 		
 		\begin{tabular}{|l|l|l|l|l|l|}
@@ -85,14 +117,24 @@
 			\end{question}
 	
 \begin{question}{2e}	
-		d) (2 points) As a function of n, how many additions (“+”) does the algorithm perform? Justify your results.
+		e) (2 points) As a function of n, how many additions (“+”) does the algorithm perform? Justify your results.
 			\end{question}
 	
 \begin{question}{3a}
-		
-$n^{1/2}+999/n$ $\epsilon$ $\Omega(ln(n)+n)$\\
 
-$\lim_{n\to\infty} (sqrt(n) + 999/n)/(lng(n) + n) = 0$\\
+
+$n^{1/2}+999/n$ $\epsilon$ $O(lg(n)+n)$\\
+Justification: $\lim_{n\to\infty} (sqrt(n) + 999/n)/(lg(n)+n) = 0$\\
+
+$ln(n)+n$ $\epsilon$ $O(n^{.99}lg(n))$ \\
+Justification: $\lim_{n\to\infty} (ln(n)+n)/(n^{.99}lg(n)) = 0$\\
+
+$n^{.99}lg(n)$ $\epsilon$ $O(ln(n!))$ \\
+$ln(n!)$* $\epsilon$ $\Theta(nlg(n))$\\
+$nlg(n)$ $\epsilon$ $O(n^{1.01})$\\
+
+
+
 
 lg(n)+ n,	lg(n!),	n0.99lg(n),	nlg(n),	n1/2+999/n,	n1.01,		999n1/2
 
