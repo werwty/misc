@@ -53,22 +53,23 @@
 	
 	\begin{question}{1a} 
 	$\Theta(n)$
-	Reasoning: $y = a_i+ x  y$ gets executed once per loop iteration. So total number of executions is n, since the look executes 0-n times. 		
+	Reasoning: $y = a_i+ x  y$ gets executed once per loop iteration. So total number of executions is n.		
 	\end{question}
 
 	\begin{question}{1b} 
 	\begin{lstlisting}
 	
-		y=0
-		for i= range(0, n)
-		m= 1
-		for j= range(1, i)
-		m= m*x
-		y= a_i*m + y 
+		y = 0
+		# the +1 in range is a python thing
+		for i in range(0, n+1)
+			m = 1
+			for j in range(1, i+1)
+				m = m*x
+			y = a_i*m + y 
 		
 	\end{lstlisting}
 	
-	The running time of this is $\Theta(n^2)$ since there is one nested loop. Compared to Horner's rule the running time is longer.
+	The running time of this is $\Theta(n^2)$ since there is one nested loop in the main loop. Compared to Horner's rule the running time is longer.
 
 	\end{question}
 		
@@ -121,56 +122,182 @@
 			\end{question}
 	
 \begin{question}{3a}
-
-
-$n^{1/2}+999/n$ $\epsilon$ $O(lg(n)+n)$\\
-Justification: $\lim_{n\to\infty} (sqrt(n) + 999/n)/(lg(n)+n) = 0$\\
-
-$ln(n)+n$ $\epsilon$ $O(n^{.99}lg(n))$ \\
-Justification: $\lim_{n\to\infty} (ln(n)+n)/(n^{.99}lg(n)) = 0$\\
-
-$n^{.99}lg(n)$ $\epsilon$ $O(ln(n!))$ \\
-$ln(n!)$* $\epsilon$ $\Theta(nlg(n))$\\
-$nlg(n)$ $\epsilon$ $O(n^{1.01})$\\
-
-
-
-
-lg(n)+ n,	lg(n!),	n0.99lg(n),	nlg(n),	n1/2+999/n,	n1.01,		999n1/2
-
-
-			\end{question}
+		
+		Sorting from lowest Asymptotic growth to the highest:\\
+		
+		$n^{1/2}+999/n$ $\epsilon$ $o(n^{.99}lg(n))$\\
+		Justification: $\lim_{n\to\infty} (sqrt(n) + 999/n)/(n^{.99}lg(n)) = 0$\\
+		
+		$n^{.99}lg(n)$ $\epsilon$ $o(lg(n)+n)$\\
+		Justification: $\lim_{n\to\infty} (n^{.99}lg(n))/(lg(n)+n) = 0$\\
+		
+		$lg(n)+n$ $\epsilon$ $o(n*lg(n))$ \\
+		Justification: $\lim_{n\to\infty} (lg(n)+n)/(n*lg(n)) = 0$\\
+				
+		$ln(n!)$* $\epsilon$ $\Theta(n*lg(n))$\\
+		Justification: According to Stirling's Approximation $ln(n!)$ $\epsilon$ $\Theta(n*lg*n)$\\
+		
+		$n*lg(n)$ $\epsilon$ $o(n^{1.01})$\\
+		Justification: $\lim_{n\to\infty} (n*lg(n))/(n^{1.01}) = 0$\\
+	
+\end{question}
 	
 \begin{question}{3b}	
-		b) lg(n!),	100!,	n1.01,	2lg(n)+lg(n)+n1/3,		n1/3,	1+1/n,	 	lg(nn)
+	
+	Sorting from lowest Asymptotic growth to the highest:\\
+			
+	$100!$ $\epsilon$ $o(1+1/n)$\\
+	Justification: $100!$ is a constant, and grows smaller than anything with $n$\\
+	
+	$1+1/n$ $\epsilon$ $o(n^{1/3})$\\
+	Justification: $\lim_{n\to\infty} (1+1/n)/(n^{1/3}) = 0$\\
+			
+	$n^{1/3}$* $\epsilon$ $\Theta(2^lg(n)+lg(n)+n^{1/3})$\\
+	Justification: $\lim_{n\to\infty} (n^{1/3})/(2^lg(n)+lg(n)+n^{1/3}) = 1$\\
+				
+	$2^lg(n)+lg(n)+n^{1/3}$ $\epsilon$ $o(lg(n!))$\\
+	Justification: $\lim_{n\to\infty} (2^lg(n)+lg(n)+n^{1/3})/(lg(n!)) = 0$\\
+	
+	$lg(n!)$* $\epsilon$ $\Theta(lg(n^n))$ \\
+	Justification: $\lim_{n\to\infty} (lg(n!))/(lg(n^n)) = 1$\\
+		
+	$lg(n^n)$ $\epsilon$ $o(n^{1.01})$\\
+	Justification: $\lim_{n\to\infty} (lg(n^n))/(n^{1.01}) = 0$\\
+	
 			\end{question}
 	
 \begin{question}{4a}	
-		4. (12 points) Prove or disprove rigorously (ie give values for c and n0 that will make your argument work) using the formal definitions of , ω (little-omega), and o (little-oh).
-		a) (4 points) nlg(n) + n - 1000  ω( n )  (little-omega).
+$n*lg(n)+n-1000$ $\epsilon$ $\omega(n)$\\
+
+By definition of $\omega$:
+
+$f(n) \epsilon \omega(g(n))$ iff $\forall{c>0}$ $\exists{n_0>0}$ such that $f(n) > cg(n) \geq 0$\\
+
+$$n*lg(n)+n-1000 > cn \geq 0$$
+
+$$lg(n)+1-1000/n > c$$
+
+This is true for $n_0>1000$ and $c<lg(n)$. So the asymptotic relationship $n*lg(n)+n-1000$ $\epsilon$ $\omega(n)$ does hold true. 
+
 			\end{question}
 	
 \begin{question}{4b}	
-		b) (4 points) nlg(n) + n0.5 + n-1  ( nlg(n) ).
+		$n*lg(n) + n^{0.5} + n^{-1}$ $\epsilon$ $\Theta( n*lg(n) )$
+		
+		To show that this is true, we must show that:\\
+				$n*lg(n) + n^{0.5} + n^{-1}$ $\epsilon$ $O( n*lg(n) )$
+				and\\
+					$n*lg(n) + n^{0.5} + n^{-1}$ $\epsilon$ $\Omega( n*lg(n) )$\\
+						
+						
+		To prove $Big-O$:\\
+		$f(n) \epsilon O(g(n))$ iff $\exists c, n_0 > 0$ s.t. $0\leq f(n) \leq cg(n)$\\
+		restrict $n\geq1$
+			$$n*lg(n) + n^{0.5} + n^{-1} \leq cn*lg(n)$$
+			$$lg(n) + n^-.5 + n^{-2} \leq c*lg(n)$$\\
+			restrict $lg(n)>1$ or $n_0>2$\\
+			For $c>0$ this inequality holds.  So 				$n*lg(n) + n^{0.5} + n^{-1}$ $\epsilon$ $O( n*lg(n) )$ with
+			$c=1$ and $n_0=2$\\
+			
+	
+		To prove $Big-\Omega$:\\
+			$f(n) \epsilon \Omega(g(n))$ iff $\exists c, n_0 > 0$ s.t. $f(n) \geq cg(n) \geq 0$\\
+
+			$$n*lg(n) + n^{0.5} + n^{-1} \geq cn*lg(n) \geq 0$$\\
+			restrict $n>1$
+			$$lg(n)+n^{-.5}+n^{-2} \geq clg(n) \geq 0$$
+			restrict $lg(n)>1$ or $n_0>2$\\
+			This inequality holds true for $0<c<1$ so choose c to be .5\\
+			$n*lg(n) + n^{0.5} + n^{-1}$ $\epsilon$ $\Omega( n*lg(n) )$\\ holds for $c=.5$ $n_0=2$\\
+			
+			Since $f(n) \epsilon O(g(n))$ and $f(n) \epsilon \Omega(g(n))$, it must be true that $f(n) \epsilon \Theta(g(n))$
+			
+
 			\end{question}
 	
 \begin{question}{4c}	
-		c) (4 points) lg(n) o( ln(n3) ) (little-oh).
+		$lg(n)$ $\epsilon$ $o(ln(n^3))$\\
+		Proof via contradiction:\\
+		
+		For the above to hold:\\
+		$\forall{c>0}$ $ \exists{n_0>0}$ s.t $ 0\leq f(n) \leq c*g(n)$
+		
+		$$0\leq lg(n) \leq c*ln(n^3)$$
+		$$0\leq lg(n) \leq 3c*lg(n)$$
+		
+		For $0<c<1/3$ there is no n such that $lg(n) \leq 3c*lg(n)$
+		Therefore 		$lg(n)$ is not characterized by $o(ln(n^3))$\\
 		
 			\end{question}
 	
 \begin{question}{5a}	
-		5. (6 points) Purpose: Practice proving asymptotic relationships. In proving big-oh and big-omega bounds there is a relationship between the c that is used and the smallest n0 that will work (for O, the smaller the c, the larger the n0; for big-omega, the larger the c, the larger the n0). In each of the following situations, describe (the smallest integer) n0 as a function of c. You'll have to use the ceiling function to ensure that n0 is an integer. Your solution should also give you a lower bound (for big-oh) or an upper bound (for big-omega) on the constant c.
-		(a) (3 points) Let f(n) = 5n4 - 7n3 and prove that f(n)  O(n4).
+	
+		To prove a Big-O relationship:\\
+		$f(n) \epsilon O(g(n))$ iff $\exists{c, n_0 >0}$ s.t. $0 \leq f(n) \leq cg(n)$
+		$$0 \leq 5n^4 - 7n^3 \leq cn^4$$
+		$$5-7/n \leq c$$
+		$$n\geq -7/(c-5)$$
+		$$n_0(c)=\ceil{-7/(c-5)}$$
+
+		
 			\end{question}
 	
-\begin{question}{5b}	
-		(b) (3 points) Let f(n) = 2n4 + 4n3 and prove that f(n)  (n3).
+\begin{question}{5b}
+	To prove a Big-$\Omega$ relationship:\\
+	
+	$f(n) \epsilon \Omega(g(n))$ iff $\exists{c,n_0}>0$ s.t. $f(n) \geq cg(n) \geq 0$
+	$$ 2n^4+4n^3 \geq cn^3 \geq 0$$
+	$$2n+4 \geq c$$
+	$$n_0(c)=\ceil{c/2-2}$$
+	
 			\end{question}
 	
 \begin{question}{6}	
-		6. (6 points) Purpose: Practice how to design, analyze, and communicate algorithms. Describe an non-recursive Θ(lg n) algorithm which computes (a/2)2n, given a and n. You may assume that a is a positive real number, and n a positive integer, but do not assume that n is a power of 2. Please follow the above instructions for describing your algorithm. Please give both, a textual description and pseudocode of your algorithm, and justify the asymptotic running time of your algorithm.
+
+	Consider an exponent $x^n$. We can write $n$ as a series of binary bits: $n=b_0b_1b_2...b_i$
+	
+	The exponent can then be written as $x^{b_0b_1b_2...b_i} = x^{b_0}*x^{b_1}...*x^{b_i}$
+	
+
+	If we compute the exponent by halving
+	$n$ and doubling $x$ every step, we can achieve this calculation in less time than $\Theta(n)$
+	
+	If $n$ is odd at any step, we store an extra variable $y$ that contains the product of all the times an odd exponent occurred. After storing this value half the exponent ($\floor{n/}$), and square the base.
+	
+	This value $y$ gets multiplied to the $x$ value one more time before returning. 
 		
+	Since we half $n$ each time, the computation time of this algorithm is $\Theta(lg(n))$	
+	\begin{lstlisting}
+	
+	x = a/2
+	e = 2*n	
+	y = 1
+	
+	while e > 1:
+		if e%2==0: 
+			x = x*x
+			e = e/2
+		else:
+			y = x*y
+			x = x*x
+			e = (e-1)/2
+	return x*y
+	\end{lstlisting}
+	
+	Worked Example:
+		\begin{lstlisting}
+		Say a=14 and n=150
+				
+		1st loop, e is 150.0, x is 49.0, y is 1.
+		2nd loop, e is 75.0, x is 2401.0, y is 1.
+		3rd loop, e is 37.0, x is 5764801.0, y is 2401.0.
+		4th loop, e is 18.0, x is 33232930569601.0, y is 13841287201.0.
+		5th loop, e is 9.0, x is 1.1044276742439207e+27, y is 13841287201.0.
+		6th loop, e is 4.0, x is 1.2197604876358358e+54, y is 1.5286700631942576e+37.
+		7th loop, e is 2.0, x is 1.4878156471976118e+108, y is 1.5286700631942576e+37.
+		8th loop, e is 1.0, x is 2.2135954000460487e+216, y is 1.5286700631942576e+37.
+		return value is 3.3838570200749116e+253
+		\end{lstlisting}
 		
 	\end{question}
 	
