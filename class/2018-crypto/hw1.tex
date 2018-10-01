@@ -1,0 +1,308 @@
+ --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{listings}
+
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\usetikzlibrary{arrows}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+	
+	% --------------------------------------------------------------
+	%                         Start here
+	% --------------------------------------------------------------
+	
+	%\renewcommand{\qedsymbol}{\filledbox}
+	
+	\title{Homework 1}%replace X with the appropriate number
+	\author{Bihan Zhang - bzhang28 %replace with your name
+		CSC 591} %if necessary, replace with your course title
+	
+	\maketitle
+	
+	
+	\begin{question}{1a} 
+			Perfect security means that the following has to hold:
+			
+			$Pr[M = m|C = c] = Pr[M = m]$
+			
+			Intuitively it means that: by looking at a cipher c, the adversary does not learn any additional information about message m. 
+			
+			For perfect security to be true, then $|K|\geq|C|\geq|M|$.
+			
+			We can construct an encrpytion scheme that looks something like 
+			
+
+	\begin{tabular}{lll}
+		m                       & k                      & c                      \\ \hline
+		\multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} \\ \hline
+		\multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{2} \\ \hline
+		\multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{2} & \multicolumn{1}{l|}{0} \\ \hline
+		\multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{3} & \multicolumn{1}{l|}{1} \\ \hline
+		\multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} \\ \hline
+		\multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{0} \\ \hline
+		\multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{2} & \multicolumn{1}{l|}{2} \\ \hline
+		\multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{3} & \multicolumn{1}{l|}{0} \\ \hline
+	\end{tabular}
+
+
+
+			Where encryption is done by look up table of $m$ and $k$ values. 
+			
+			Looking at this it's clear that $Pr_{k←KeyGen}[Enc_k(m) = c] != 1/|C|$\\
+			
+			
+			 $Pr_{k←KeyGen}[Enc_k(m) = c] == 1/2$ for c=0
+			 
+			 $Pr_{k←KeyGen}[Enc_k(m) = c] == 1/4$ for c=1,2\\
+			 
+			 
+		Note that this method is still perfectly secure because it doesn't leak any information about $m$ (it does leak information about the key used, but hey, that's not a part of the perfectly secure definition)
+			
+			
+	\end{question}
+	\begin{question}{1b}
+		
+			\hspace{\parindent} 1. $M=S$ and $K=\{0,1\}^3$ is perfectly secure because $|K| \geq |M|$  \\
+			
+			\hspace{\parindent} 2. $M=\{0,1\}^3$ and $K=S$ is not perfectly secure because $|K| < |M|$  \\
+			
+			\hspace{\parindent} 3. $M=K=S$ is perfectly secure because $|K| = |M|$  \\
+			
+	\end{question}
+
+	\begin{question}{2a}
+		$G'(s) := s||G(s)$ is not a PRG. 
+		
+		A Distinguisher can do the following:
+		
+		\hspace{\parindent} 1. Let $D(y)$ be an distinguisher. Assuming $D$ knows the expansion factor for $G$ ($p(n)$), Compute the length of $s$. $|s|=|y|-|p(s)|$
+		
+		\hspace{\parindent} 2. Split $y=y_1+y_2$ where $y_1$ is the first $s$ bits of $y$ ($y[0:s]$) and $y_2 = y[s+1:|y|]$ 
+		
+		\hspace{\parindent} 3. Compute $G'(y_1)$. return $1$ if $G'(y_1) == y_2$ return $0$ otherwise. \\
+		
+		
+		Analysis:
+		
+		\hspace{\parindent} $Pr[D(y_{G'(n)})\rightarrow1] = 1$
+		
+		\hspace{\parindent} $Pr[D(y_{\{0,1\}^{p(n)+n}]})\rightarrow1] = 1/2 + negl(n)$
+		
+		\hspace{\parindent} $negl(n)$ accounts for the probably that $\{0,1\}^{p(n)+n} == n || G'(n)$
+		
+		\hspace{\parindent} $|Pr[D(y_{G'(n)})\rightarrow1] - Pr[D(y_{\{0,1\}^{p(n)+n}]})\rightarrow1]| = 1/2 + negl(n) \geq negl(n)$
+		
+		\hspace{\parindent} This shows that $G'$ is not a PRG. 
+		
+	\end{question}
+	
+	\begin{question}{2b}
+		$G'(s):=f(g(f(s)))$ where $f(x)=x[0:|x|-1]$ is a PRG.
+		
+		Proof:
+		
+		\hspace{\parindent} Assumption: If $G$ is a PRG, $G'$ is a PRG
+		
+		
+		\hspace{\parindent} Assume for the sake of contradiction that $G'$ is not a PRG. $\exists D'_{PPT}$ s.t. $Pr[D'(y_{G'})\rightarrow1] = q(n)]$ where $q(n)$ is some non negligible number. 
+		
+		Let $G_a$ be a PRG. Let $G$ be constructed as such: $G(s)=G_a(s+r_1)$ where $r$ is a truly random bit. $G$ is still a trivially a PRG (since a the seed to $G_a$ is truly random)
+		
+		A Distinguisher $D$ for $G_a(s)$ can be constructed thus:
+			Given some $y_a=G_a(s)$ add some random bit: $y'=G_a(s) + r_2$. We can then use the distinguisher $D'(y')$ and return whatever the output of this is. 
+			
+			Analysis:
+				$D$ only succeeds if both $r_1$ and $r_2$ are chosen correctly. We can write $G_a(s)=G'(s+r_1)+r_2$. \\
+				
+				$Pr[D_a(y_{TR}) \rightarrow 1]  - Pr[D_a(y_{G_a}) \rightarrow 1] |= 1/2 - 1/4 * q(n) > negl()$\\
+				
+				This contradicts with our assumption that $G_a$ is a PRG.
+				
+				Thus $G'(s)$ must be a PRG.
+
+		
+		
+	\end{question}	
+
+	\begin{question}{3a}
+		$F'$ is not a secure PRG.
+		
+		There exists a distinguisher $D_{PPT}$ that can do the following to win the PRF game:
+		
+		\hspace{\parindent} 1. $D$ will pass $x_1||x_2$ to $F'$
+		
+		\hspace{\parindent} 2. $F'$ will return $y_1||y_2$
+		
+		\hspace{\parindent} 3. $D$ can pass $x_1||TR()$ to $F'$
+		
+		\hspace{\parindent} 4. Let the returned value be $y'_1||y'_2$
+		
+		\hspace{\parindent} 5. If $y_1 == y'_1$ output 1 otherwise output 0. \\
+		
+		$Pr[D^{F'_k} \rightarrow 1] = 1$
+		
+		$Pr[D^{TR} \rightarrow 1] = 1/2 - 1/((2^n)^{2^n})$
+		
+		$|Pr[D^{F'_k} \rightarrow 1] - Pr[D^{TR} \rightarrow 1]| = 1/2 - 1/((2^n)^{2^n})$ 
+		
+	\end{question}
+
+	\begin{question}{3b}	
+		$F'$ is a PRF.
+		
+		Statement: if F is a PRF, F' is a PRF
+		
+		Assume for the sake of contradiction that F' is not a PRF. $\exists D'_{PPT}$ such that $Pr[D'_{TR} \rightarrow 1] - Pr[D'_{F'_k(m)}\rightarrow 1] = p(n)$, where $p(n)$ is some non negliable number.		 
+		 
+		Let's construct a distinguisher for $F$ from $D'$ and call it $D$.
+		
+		Let $D$ have oracle access to a function $O$, that is instantiated with either $F$ or a truly random function $TF$.
+		
+		$D$ should pick some $k'_2 = \{0,1\}^{n}$
+		
+		When $D'$ asks for the result of $F'(m_i)$ $D$ should do the following:
+		
+		\hspace{\parindent}	1. Query $O(m_i)$
+		
+		\hspace{\parindent} 2. Pass $O(m_i) \oplus k'_2$ to $D'$
+		
+		\hspace{\parindent} 3. Continue training $D'$ until it feels confident in guessing
+		
+		\hspace{\parindent} 4. When $D'$ outputs 1, output 1. When $D'$ outputs 0, output 0.\\ 
+		
+		
+		The probability of $D$ guessing right is the same probably that $D'$ is right.
+		
+		$|Pr[D_{TR} \rightarrow 1]- Pr[D_{F_k(m)} \rightarrow 1]| = |Pr[D'_{TR} \rightarrow 1] - Pr[D'_{F'_k(m)}\rightarrow 1]| = p(n)$
+		
+		This contradicts with our assumption that $F$ is a PRF. 
+		
+		Thus if $F$ is a PRF, $F'$ must also be a PRF.
+		
+	\end{question}
+
+	\begin{question}{4}	
+		$\Pi=(Gen, Enc, Dec)$
+		
+		Let $\Pi.Gen$ generate a key $k=k_1||k_2=\{0,1\}^{2n}$\\
+		
+		Let $\Pi.Enc(k, m)$ be as follows, where $k=k_1||k_2$
+		
+		\hspace{\parindent} 1. Let $r_1, c_1 = \Pi_1.Enc(k_1, m)$
+		
+		\hspace{\parindent} 2. $r_2, c_2 = \Pi_2.Enc(k_2, c_1)$
+		
+		\hspace{\parindent} 3. return $<r_1, r_2, c_2>$\\
+		
+		
+		Let $\Pi.Dec(k, c)$ be as follows, where $c=<r_1, r_2, c_2>$
+		
+		\hspace{\parindent} 1. $c_1 = \Pi_2.Dec(k_2, <r_2, c_2>)$
+		
+		\hspace{\parindent} 2. $m = \Pi_1.Dec(k_1, <r_1, c_1>)$
+		
+		\hspace{\parindent} 3. return $m$\\
+		
+		
+		If $\Pi_1$ or $\Pi_2$ is secure, $\Pi$ is secure. 
+		
+		Assume for the sake of contradiction that $\Pi$ is insecure: 
+		
+		$\exists A_{PPT}$ such that $Pr[A$ wins $Priv_\Pi]=1/2 + p(n)$\\
+		
+		
+		\textbf{Case 1:}
+		
+		$\Pi_2$ is secure, $\Pi_1$ is insecure. 
+		
+		Let $A_2$ be the adversary trying to break $\Pi_2$. $A_2$ can run adversary $A$, and has access to oracle $O_2$ which is instantiated with $\Pi_2$. Let $A_2$ also have access to $\Pi_1$.
+		
+		
+		When $A$ asks for an encryption of $m_i$ let $A_2$ do:
+		
+		\hspace{\parindent} 1. Pass $m_i$ to $\Pi_1$, $<r_1, c_1> = \Pi_1(m_i)$
+		
+		\hspace{\parindent} 2. pass $c_1$ to encryption oracle. $<r_2, c_2> = O(c_1)$
+		
+		
+		\hspace{\parindent} 3. Output $<r_1, r_2, c_2>$
+		
+		When $A$ challenges with pair $m_0, m_1$ pick a bit $m_b$. Encrypt $m_b$ with steps above. 
+		
+		Decision: When $A$ outputs a bit $b'$, output $b'$.
+		
+		$Pr[A_2$ wins $Priv_{\Pi_2}] = Pr[A$ wins $Priv_\Pi]=1/2 + p(n)$
+		
+		Which contradicts our assumption that $\Pi_2$ is secure.\\
+
+		
+		\textbf{Case 2:}
+		
+		$\Pi_1$ is secure, $\Pi_2$ is insecure. 
+		
+		Let $A_1$ be the adversary trying to break $\Pi_1$. $A_1$ can run adversary $A$, and has access to oracle $O_1$ which is instantiated with $\Pi_1$. Let $A_1$ also have access to $\Pi_2$.
+		
+		
+		When $A$ asks for an encryption of $m_i$ let $A_1$ do:
+		
+		\hspace{\parindent} 1. Pass $m_i$ to $O_1$, $<r_1, c_1> = O(m_i)$
+		
+		\hspace{\parindent} 2. pass $c_1$ to $\Pi_2$. $<r_2, c_2> = \Pi_2(c_1)$
+		
+		
+		\hspace{\parindent} 3. Output $<r_1, r_2, c_2>$
+		
+		When $A$ challenges with pair $m_0, m_1$ pick a bit $m_b$. Encrypt $m_b$ with steps above. 
+		
+		Decision: When $A$ outputs a bit $b'$, output $b'$.
+		
+		$Pr[A_1$ wins $Priv_{\Pi_1}] = Pr[A$ wins $Priv_\Pi]=1/2 + p(n)$
+		
+		Which contradicts our assumption that $\Pi_1$ is secure.\\
+		
+		
+		
+		Both cases lead to contradictions, which must mean that $\Pi$ is secure.
+		
+	\end{question}
+		
+		
+	\clearpage
+	
+	
+	% --------------------------------------------------------------
+	%     You don't have to mess with anything below this line.
+	% --------------------------------------------------------------
+	
+\end{document}

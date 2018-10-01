@@ -1,0 +1,463 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{listings}
+
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\usetikzlibrary{arrows}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+	
+	% --------------------------------------------------------------
+	%                         Start here
+	% --------------------------------------------------------------
+	
+	%\renewcommand{\qedsymbol}{\filledbox}
+	
+	\title{Homework 2}%replace X with the appropriate number
+	\author{Bihan Zhang - bzhang28 %replace with your name
+		CSC 505} %if necessary, replace with your course title
+	
+	\maketitle
+	
+	
+	\begin{question}{1a} 
+			Algorithm: Recursively make change: find the largest denomination that will fit into some value v, and call algorithm again with v=v-denomination.
+			
+			
+		\begin{lstlisting}
+# US denominations, replace with whatever the country's coin denoms are
+# it is assumed that this array is sorted from largest to smallest 
+# otherwise the greedy algorithm would not work correctly.
+# Call sort on this list if the denoms aren't presorted.
+denominations = [50, 25, 10, 5, 1]
+
+		
+# always get the largest denominations of coin that can fit into n.
+# return when n==0, otherwise recurse
+def get_change_greedy_recursive(n, coins):
+	for c in denominations:
+		if n>=c:
+		coins.append(c)
+		n=n-c
+		break
+	
+	if n==0:
+		return coins
+	
+	return get_change_greedy_recursive(n, coins)
+		\end{lstlisting}	
+		
+
+		$\Theta(n)$ In the worst case scenario (where c=1 for every loop), the function will be ran n times $O(n)$. In the best case scenario the loop will be ran $n/max(c)$ times, $\Omega(n/max(c))= \Omega(n)$. Therefore running time is $\Theta(n)$\\
+		
+		
+		Worked Example:
+		
+		
+		
+\begin{lstlisting}
+Say n=2641
+0th recursion, original n: 2641, largest coin that fits: 50, new n: 2591
+1st recursion, original n: 2591, largest coin that fits: 50, new n: 2541
+2nd recursion, original n: 2541, largest coin that fits: 50, new n: 2491
+3rd recursion, original n: 2491, largest coin that fits: 50, new n: 2441
+4th recursion, original n: 2441, largest coin that fits: 50, new n: 2391
+5th recursion, original n: 2391, largest coin that fits: 50, new n: 2341
+6th recursion, original n: 2341, largest coin that fits: 50, new n: 2291
+7th recursion, original n: 2291, largest coin that fits: 50, new n: 2241
+8th recursion, original n: 2241, largest coin that fits: 50, new n: 2191
+9th recursion, original n: 2191, largest coin that fits: 50, new n: 2141
+10th recursion, original n: 2141, largest coin that fits: 50, new n: 2091
+11th recursion, original n: 2091, largest coin that fits: 50, new n: 2041
+12th recursion, original n: 2041, largest coin that fits: 50, new n: 1991
+13th recursion, original n: 1991, largest coin that fits: 50, new n: 1941
+14th recursion, original n: 1941, largest coin that fits: 50, new n: 1891
+15th recursion, original n: 1891, largest coin that fits: 50, new n: 1841
+16th recursion, original n: 1841, largest coin that fits: 50, new n: 1791
+17th recursion, original n: 1791, largest coin that fits: 50, new n: 1741
+18th recursion, original n: 1741, largest coin that fits: 50, new n: 1691
+19th recursion, original n: 1691, largest coin that fits: 50, new n: 1641
+20th recursion, original n: 1641, largest coin that fits: 50, new n: 1591
+21th recursion, original n: 1591, largest coin that fits: 50, new n: 1541
+22th recursion, original n: 1541, largest coin that fits: 50, new n: 1491
+23th recursion, original n: 1491, largest coin that fits: 50, new n: 1441
+24th recursion, original n: 1441, largest coin that fits: 50, new n: 1391
+25th recursion, original n: 1391, largest coin that fits: 50, new n: 1341
+26th recursion, original n: 1341, largest coin that fits: 50, new n: 1291
+27th recursion, original n: 1291, largest coin that fits: 50, new n: 1241
+28th recursion, original n: 1241, largest coin that fits: 50, new n: 1191
+29th recursion, original n: 1191, largest coin that fits: 50, new n: 1141
+30th recursion, original n: 1141, largest coin that fits: 50, new n: 1091
+31th recursion, original n: 1091, largest coin that fits: 50, new n: 1041
+32th recursion, original n: 1041, largest coin that fits: 50, new n: 991
+33th recursion, original n: 991, largest coin that fits: 50, new n: 941
+34th recursion, original n: 941, largest coin that fits: 50, new n: 891
+35th recursion, original n: 891, largest coin that fits: 50, new n: 841
+36th recursion, original n: 841, largest coin that fits: 50, new n: 791
+37th recursion, original n: 791, largest coin that fits: 50, new n: 741
+38th recursion, original n: 741, largest coin that fits: 50, new n: 691
+39th recursion, original n: 691, largest coin that fits: 50, new n: 641
+40th recursion, original n: 641, largest coin that fits: 50, new n: 591
+41th recursion, original n: 591, largest coin that fits: 50, new n: 541
+42th recursion, original n: 541, largest coin that fits: 50, new n: 491
+43th recursion, original n: 491, largest coin that fits: 50, new n: 441
+44th recursion, original n: 441, largest coin that fits: 50, new n: 391
+45th recursion, original n: 391, largest coin that fits: 50, new n: 341
+46th recursion, original n: 341, largest coin that fits: 50, new n: 291
+47th recursion, original n: 291, largest coin that fits: 50, new n: 241
+48th recursion, original n: 241, largest coin that fits: 50, new n: 191
+49th recursion, original n: 191, largest coin that fits: 50, new n: 141
+50th recursion, original n: 141, largest coin that fits: 50, new n: 91
+51th recursion, original n: 91, largest coin that fits: 50, new n: 41
+52th recursion, original n: 41, largest coin that fits: 25, new n: 16
+53th recursion, original n: 16, largest coin that fits: 10, new n: 6
+54th recursion, original n: 6, largest coin that fits: 5, new n: 1
+55th recursion, original n: 1, largest coin that fits: 1, new n: 0
+
+\end{lstlisting}
+			
+	\end{question}
+
+
+	\begin{question}{1b} 
+	
+	Algorithm: Instead of recursively taking out the largest coin, we can calculate the number of largest coins we need at once by getting the quotient of n/denomination.
+	
+	Since we can do this for all the denominations, and the growth of this algorithm isn't dependent on n, it's a linear algorithm $\Theta(1)$
+	The only loop is fixed by the number of denominations, which is constant
+	
+	\begin{lstlisting}
+	
+# US denominations, replace with whatever the country's coin denoms are
+# it is assumed that this array is sorted from largest to smallest 
+# otherwise the greedy algorithm would not work correctly.
+# Call sort on this list if the denoms aren't presorted.
+denominations = [50, 25, 10, 5, 1]
+
+def get_change_greedy_non_recursive(n):
+	coins = []
+	for c in denominations:
+		
+		# Get the quotent and remainder for n/c
+		# https://docs.python.org/3/library/functions.html#divmod
+		quotient, remainder = divmod(n, c)   
+		
+		# add the denomination c, into the coin array, a quotient amount of times
+		coins.extend([c for i in range(quotient)])
+		
+		# n is set to remainder, the amount that we haven't accounted for yet
+		n=remainder
+	
+	return coins
+	\end{lstlisting}	
+	
+	Worked example:
+		
+\begin{lstlisting}
+Say n=2641
+
+# we need 52 coins of denomination 50
+divmod(n, 50) = (52, 41)
+
+n=41
+
+# we need 1 coin of denomination 25
+divmod(n,25) = (1, 16)
+
+n=16
+
+#we need one coin of denomination 10
+divmod(n,10)=(1,6)
+
+n=6
+
+# we need one coin of denomination 5
+divmod(n, 5)= (1,1)
+
+n=1
+
+# we need one coin of denominatoin 1
+divmod(n,1)=(1,0)
+	\end{lstlisting}	
+	
+\end{question}
+
+	\begin{question}{1c}
+		 In a country with coin denominations $[10,6,1]$ calling $get\_change\_greedy\_recursive(12, [])$ would return $[10, 1, 1]$ because the algorithm always includes the largest coin smaller than $n$.
+		 
+		 The optimal result to this $get\_change(12)$ should be $[6,6]$
+	\end{question}
+	
+	
+\begin{question}{2a}
+	If n is even: $a=2, b=2$, $n^{log_b(a)}= n^1$, $f(n)=n^2$, $\epsilon < 1 $
+	$f(n) \epsilon \Omega(n)$ The regularity condition is also satisfied:
+	$af(n/b)=2 (n/2)^2 = 2n^2/4 \leq cf(n)$ for $c=1/2$
+	
+	This is master theorem case 3. 
+	so $T(n) \epsilon \Theta(n^2)$ if n=even\\
+	
+	If n is odd: $a=2, b=2$, $n^{log_b(a)}= n^1$, $f(n)=n^3$, $\epsilon < 2 $
+	$f(n) \epsilon \Omega(n)$ The regularity condition is also satisfied:
+	$af(n/b)=2 (n/2)^3 = 2n^3/8 \leq cf(n)$ for $c=1/4$
+		
+	This is master theorem case 3. 
+	so $T(n) \epsilon \Theta(n^3)$ if n=odd\\
+\end{question}
+
+\begin{question}{2b}
+	$a=2, b=4$, $n^{log_b(a)} = n^.5$, $f(n)=n^{0.51}$, $\epsilon =0.1 $
+	
+	$f(n) \epsilon \Omega(n^.5)$
+	This is master theorem case 3. 
+	
+	The regularity condition is satisfied: 
+	$af(n/b) = 2*(n/4)^0.51 = 0.98623270449 * n^0.51 \leq c*f(n)$ where $c=0.98623270449$
+\end{question}
+
+\begin{question}{2c}
+	$a=2^n$, $b=2$, $n^{log_b(a)}=n$, $f(n)=n^n$
+	
+	$n^n \epsilon \Omega(n^{1+\epsilon})$ where $\epsilon<n-1$
+	
+	This looks like master theorem case 3, but this does not satisfy the regularity condition.
+	
+	$2^n * (n/2)^{n/2} = 2^{n-1}*n^n$ There does not exist a c to satisfy $2^{n-1}*n^n<cn^n$
+	The Master Theorem does not apply.
+\end{question}
+	
+\begin{question}{2d}
+	$a=3$, $b=2$, $n^{log_b(a)}=n^{log_2(3)}=n^1.58498$, $f(n)=n^2$, $\epsilon<0.4$
+	
+	Master theorem case 3: $f(n) \epsilon \Omega(n^{1.58498+\epsilon})$
+	
+	The regularity condition also holds: $3(n/2)^2= 3n^2/4 \leq cn^2$ where $c=3/4$
+	
+\end{question}
+
+\begin{question}{2e}
+$a=1$, $b=6/5$, $n^{log_b(a)}=n^0=1$, $f(n)=1$
+
+$f(n) \epsilon 1$
+
+This is master theorem case 2.
+
+$T(n) \epsilon \Theta(1 lg(n))$
+\end{question}
+
+\begin{question}{3a}
+Forward iterating through this recurrence:
+
+$T(0)...T(3)=1$
+
+$T(4)...T(15)=a$
+
+$T(16)...T(63)=a^2$
+
+We can reason that $T(n)=a^{\floor{log_4(n)}}$\\
+
+Proof:
+
+let $p(n) = a^{\floor{log_4(n)}}$
+
+plugging this into our original equation:
+
+$p(n)=a*p(\ceil{n/4}) = a*a^{\floor{log_4(\ceil{n/4})}} = a*a^{\floor(log_4(n)-1)} =  a^{\floor{log_4(n)}}$
+\end{question}
+
+\begin{question}{3b}
+Forward iterating through this recurrence:
+	
+	$T(0)...T(8) =c$
+	
+	$T(9), T(10) = 3c$
+	
+	$T(11), T(12) = 3^2c$
+	
+	$T(13), T(14) = 3^3c$
+	
+	We can reason that 
+	
+	$T(n)=c$ for $n\leq 8$
+	
+	$T(n)=3^{\ceil{(n-8)/2}}c$ for $n>8$\\
+	
+	Proof:
+	
+	Let $p(n)= 3^{\ceil{(n-8)/2}}c$ for $n>8$
+	
+	plugging this into our original equation:
+	
+	$p(n)=2*p(n-2) = 2*3^{\ceil{(n-10)/2}}c = 3^{\ceil{(n-8)/2}}c$
+\end{question}
+
+\begin{question}{3c}	
+Forward iterating through this recurrence:
+
+$T(0)=0$
+$T(1)=0 + 1 + 1/1$
+
+$T(2)=0 + 1 + 1/1 +1 + 1/2$
+$T(3)=0 + 1 + 1/1 +1 + 1/2 +1 + 1/3$
+
+$T(n)=n + \sum_{i=1}^{n}1/i$
+
+
+
+	Proof:
+
+Let $p(n)= n + \sum_{i=1}^{n}1/i$
+
+plugging this into our original equation:
+
+$p(n)=p(n-1)+1+1/n= (n-1) + \sum_{i=1}^{n-1}1/i + 1 + 1/n = n + \sum_{i=1}^{n-1}1/i + 1/n = n+ \sum_{i=1}^{n}1/i$
+
+
+\end{question}
+
+
+\begin{question}{4a}	
+	We know that the $Quicksort$ algorithm is correct (proven in book). Tail-recursive-quicksort differs from the original quicksort by the last line: $Quicksort(a,q+1,r)$ is replaced with $p=q+1$
+	
+	On the second iteration through the Tail-recursive-quicksort while loop, you can see that $ Tail-recursive-quicksort(A, p, q-1)$ with $p=q+1$, $r=r$ and $A=A$ is equivalent to the second call in the traditional quicksort method. Therefore because Tail-recursive-quicksort does the same thing as quicksort, Tail-recursive-quicksort must correctly sort A.
+\end{question}
+
+\begin{question}{4b}	
+	The stack depth is $\Theta(n)$ if Tail-recursive-quicksort is called n times. 
+	
+	This should only happen if q=r for every call to partition, which can happen when the array is already sorted in decreasing order.
+\end{question}
+
+\begin{question}{4c}	
+	
+	This algorithm does a tail recursive quick sort, but compares the two array intervals (p to q) and (q to r) beforehand, and performs the recursive sort on the smaller interval. 
+	Because we're only recursing the smaller interval the stack depth is at most $\Theta(lgn)$
+	The runtime should remain the same at $\Theta(n lg(n))$
+	
+\begin{lstlisting}
+TAIL-RECURSIVE-QUICKSORT-Less-Stack(A, p, r):
+	while p < r:
+		# Partition and sort left subarray.
+		q = partition(A, p, r)
+		
+		# Check which array interval is smaller, 
+		# and always sort on the smaller one
+		if (q - p) < (r - q):
+			TAIL-RECURSIVE-QUICKSORT-Less-Stack(A, p, q - 1)
+			p = q + 1
+		else:
+			TAIL-RECURSIVE-QUICKSORT-Less-Stack(A, q+1, r)
+			r = q - 1
+\end{lstlisting}	
+	
+
+\end{question}
+
+\begin{question}{5}	
+	
+Use a min heap implementation. A min heap is a priority queue, quite reminescent of a max heap, but with the property that the value stored in a node is less than or equal to the value store in its children. 
+
+This minimum heap should use a constant sized array of size 100. 
+
+When the every node in the heap has been filled, the next timestamp to come should be inserted by popping out the minimum (root node). replacing that with the new timestamp, and recursively calling min\_heapify until the heap property is satisfied again. 
+
+Because we know that every timestamp is at most 100 places away from its correctly sorted position, we only have to keep 100 nodes in memory. 
+
+To get the timestamps in the correct order, we can call min\_heapsort() on the min heap, and rearrange the values in the array in place, thus we would never need to use more than an array of 100, and space complexity for this is $\Theta(100) = \Theta(1)$
+
+After we get the sorted array we can heapify the whole thing again when the next value is inserted. Time complexity for the algorithm is the same as traditional heapsort ($\Theta(nlg(n))$)\\
+
+
+The Pseudocode for min\_heapify is as follows:
+
+
+\begin{lstlisting}
+min-heapify(A,i):
+	l = left(i)
+	r = right(i)
+	if (l <= heap-size(A) and A[l] < A[i]):
+		smallest = l 
+	else:
+		smallest = i
+	if (r <= heap-size(A) and A[r] < A[smallest])
+		then smallest = r
+	if smallest != i
+		then exchange A[i] and A[smallest]
+		min_heapify(A, smallest) 
+\end{lstlisting}	
+		
+		The Pseudocode for build-min-heap is as follows:
+
+\begin{lstlisting}
+build-min-heap(A):
+	A.heap-size = A.length
+	for i= \floor{A.length/2} downto 1:
+		min-heapify(A, i)					
+		\end{lstlisting}	
+						
+The Pseudocode for min\_heapsort is as follows:
+
+\begin{lstlisting}
+min-heapsort(A):
+	build-min-heap(A)
+	for i=A.length downto 2:
+		exchange A[1] with A[i]
+		A.heap-size=A.heap-size-1
+		min-heapify(A, 1)			
+\end{lstlisting}	
+
+
+And the algorithm for storing the timestocked quotes is:
+
+\begin{lstlisting}
+insert-timestocked-quote(A, value):
+	if A.length <100:
+		A[A.length+1] = value
+		build-min-heap(A)
+		
+	else:
+		# pop out the oldest timestamp, and replace it with value
+		A[1]=value
+		min-heapify(A, 1)
+\end{lstlisting}	
+	
+\end{question}
+	\clearpage
+	
+	
+	% --------------------------------------------------------------
+	%     You don't have to mess with anything below this line.
+	% --------------------------------------------------------------
+	
+\end{document}
