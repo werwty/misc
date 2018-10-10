@@ -1,0 +1,219 @@
+%\iffalse
+%
+%INSTRUCTIONS: (if this is not lecture1.tex, use the right file name)
+%
+%  Clip out the ********* INSERT HERE ********* bits below and insert
+%appropriate TeX code.  Once you are done with your file, run
+%
+%  ``latex lecture1.tex''
+%
+%from a UNIX prompt.  If your LaTeX code is clean, the latex will exit
+%back to a prompt.  Once this is done, run
+%
+%  ``dvips lecture1.dvi''
+%
+%which should print your file to the nearest printer.  There will be
+%residual files called lecture1.log, lecture1.aux, and lecture1.dvi.
+%All these can be deleted, but do not delete lecture1.tex.
+%\fi
+%%
+\documentclass[11pt]{article}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{#1-\arabic{page}}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { {\bf CSC 591 Cryptography} \hfill #2 }
+       \vspace{4mm}
+       \hbox to 5.78in { {\Large \hfill #5  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { {\it #3 \hfill #4} }
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+
+\newcommand{\lecture}[3]{\handout{L#1}{#2}{Lecturer: Alessandra Scafuro}{Scribe: #3}{Lecture #1}}
+
+\def\squarebox#1{\hbox to #1{\hfill\vbox to #1{\vfill}}}
+\def\qed{\hspace*{\fill}
+        \vbox{\hrule\hbox{\vrule\squarebox{.667em}\vrule}\hrule}}
+\newenvironment{solution}{\begin{trivlist}\item[]{\bf Solution:}}
+                      {\qed \end{trivlist}}
+\newenvironment{solsketch}{\begin{trivlist}\item[]{\bf Solution Sketch:}}
+                      {\qed \end{trivlist}}
+\newenvironment{proof}{\begin{trivlist}\item[]{\bf Proof:}}
+                      {\qed \end{trivlist}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{assumption}[theorem]{Assumption}
+
+%Put more macros here, as needed.
+\newcommand{\al}{\alpha}
+\newcommand{\Z}{\mathbb Z}
+
+\begin{document}
+
+\lecture{CPA-Secure Encryption Algorithms}{9/26/18}{Bihan Zhang}
+
+\section*{Topic/Problem}
+This is the second lecture on CPA, with a focus on constructing a CPA-secure encryption scheme with a PRF.
+
+\subsection*{Definition}
+
+An encryption scheme is \textit{CPA} secure if it is secure against chosen plaintext attacks.
+
+
+The CPA game ($Priv^{CPA}_{A,\Pi}(n)$) is as follows:
+
+\hspace{\parindent} 1. Let $\Pi$ be an encryption oracle.
+
+\hspace{\parindent}	2. Let $A_{PPT}$ be an adversary
+
+\hspace{\parindent}	3. Training Phase: $A_{PPT}$ can pass multiple messages $m_i$ to $\Pi$ and get the encrypted ciphertext $c_i$ back.
+
+\hspace{\parindent}	4. Challenge Phase: 
+
+\hspace{\parindent}\hspace{\parindent} a. $A_{PPT}$ passes $\{m_0, m1\}$ to $\Pi$. 
+
+\hspace{\parindent}\hspace{\parindent} b. $\Pi$ picks either $m_0$ or $m_1$ and returns $c_b= Enc(m_b)$ 
+
+\hspace{\parindent}\hspace{\parindent} c. $A_{PPT}$ guesses $b'$ ($b'$ is whichever $m_0$, or $m_1$ $A_{PPT}$ thinks $\Pi$ encrypted.
+
+\hspace{\parindent}\hspace{\parindent} d. $A_{PPT}$ wins if $b==b'$
+
+
+For a CPA secure encryption scheme:
+
+$$Pr[A \textrm{ wins } Priv_\Pi^{CPA}] = 1/2 + \epsilon$$
+$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] = 1/2 + \epsilon$$
+$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] - Pr[A \textrm{ wins } Priv_\Pi^{CPA}] \leq \epsilon$$
+
+-----------------------------------------
+
+A function $F: \{0,1\}^* \times \{0,1\}^* \rightarrow \{0,1\}^*$ is considered pseudorandom if for all distinguishers $D_{PPT}$ the following holds true:\\
+
+$$|Pr[D^{F_k}\rightarrow 1] - Pr[D^{\{0,1\}^n}\rightarrow1]| \leq \epsilon$$\\
+
+Or, in layman's terms, there does not exist a distinguisher that can tell apart the output of a PRF, and the output of a truly random function. The distinguisher can play the PRF Game in order to prove that it can tell the the two apart.
+
+
+The PRF Game:\\
+
+\hspace{\parindent} 1. Let $F$ be an encryption oracle.
+
+\hspace{\parindent} 2. Let $D_{PPT}$ be a distinguisher with access to $F$.
+
+\hspace{\parindent} 3. $D_{PPT}$ passes $x_i$ to F
+
+\hspace{\parindent} 4. $F$ will either return $y_i = PRF(x_i)$ or $y_i = TR()$
+
+\hspace{\parindent} 5. $D_{PPT}$ guesses whether $y_i$ came from the PRF or from TR.
+
+
+$$D_{PPT} \textrm{ wins if }|Pr[D^{F_k}\rightarrow 1] - Pr[D^{\{0,1\}^n}=1]| = p(n)$$\\
+
+
+\subsection*{Scheme}
+CPA secure encryption: 
+Let $F$ be a pseudorandom function. Let $\Pi$ be (Gen, Enc, Dec) as described:\\
+
+\hspace{\parindent} Gen: $k \epsilon \{0,1\}^n$\\
+
+\hspace{\parindent} Enc(k, m): Given $k \epsilon \{0,1\}^n$ and $m \epsilon \{0,1\}^n$ choose a uniformly random $r \epsilon \{0,1\}^n$ and construct $c = <F_k(r)\oplus m, r>$\\
+
+\hspace{\parindent} Dec(k,c): Given $k \epsilon \{0,1\}^n$ and $c=<s,r>$ construct $m= F_k(r)\oplus s$
+
+
+\subsection*{Security Proof}
+
+If $F$ is a PRF, $\Pi$ is secure.\\
+
+\textbf{Intuition:}
+
+Even though intuitively it feels insecure to reveal $r$ it actually doesn't matter. Even when $r$ is known, since $k$ is unknown, the result of $F_k(r)$ is indistinguishable from a random function. And because the output of $F_k(r)$ is pseudo-random, $F_k(r) \oplus m $ should be secure, and because $r$ is a random value each time, the scheme is non-deterministic, and should be CPA secure. \\
+
+
+\textbf{Formal Proof:}
+
+Assume for the sake of contradiction that there exists an Adversary $A_{CPA}$ that can win the $\Pi$ CPA game with some non negligible probability $p(n)$.\\
+
+
+$$Pr[A \textrm{ wins } Priv_\Pi^{CPA}] = 1/2 + p(n)$$
+$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] = 1/2 + g/2^n$$
+
+The $g/2^n$ term comes from the number of previous guesses by adversary. There is a negliable chance of the random string $r$ repeating. This is very unlikely, so we'll treat $g/2^n = \epsilon$
+
+
+$$|Pr[A \textrm{ wins } Priv_{TR}^{CPA}]-Pr[A \textrm{ wins } Priv_\Pi^{CPA}] | = p(n)$$
+
+\textbf{Reduction}
+A distinguisher $D$ for $F$ can be constructed as follows:
+
+	\hspace{\parindent}Assume $D$ has oracle access to a function $O$. $O$ is either instantiated with F, or with a truly random function TF.
+	
+	\hspace{\parindent}Assume also that D can run adversary $A_{CPA}$
+	
+	\hspace{\parindent}When $A_{CPA}$ is in it's training phase, it'll ask for encryptions of messages $m_i$, when this happens do:
+	
+	\hspace{\parindent} 1. Pick a random $r_i = {0,1}^n$
+	
+	\hspace{\parindent} 2. Compute $y_i:=O(r_i)$ NOTE: replace this with:
+	Query the oracle with ri and recieve yi
+	because O is not a function caputured by the adversary
+	
+	\hspace{\parindent} 3. Output $<r_i, m_i \oplus y_i>$\\
+	
+	\hspace{\parindent} When $A_{CPA}$ challenges with $m_0, m_1$, do:
+	
+	\hspace{\parindent} 1. Pick $b\gets_R \{0,1\}$ 
+	
+	\hspace{\parindent} 2. Pick a random $r_i = {0,1}^n$
+	
+	\hspace{\parindent} 3. Compute $y_i:=O(r_i)$
+	
+	\hspace{\parindent} 4.  Output $\langle r_i, m_b \oplus y_i \rangle$\\
+	
+	\hspace{\parindent} When $A_{CPA}$ enters its decision phase and outputs a bit $b'$. D should return 1 if $b==b'$, and 0 otherwise
+
+
+\textbf{Analysis:}
+
+If $O$ is instantiated with $F$ then the reduction is perfectly simulating the game $Priv^{CPA}_\Pi$ and therefore:
+
+$$Pr[D^F \rightarrow 1] = Pr[A \textrm{ wins } Priv^{CPA}_\Pi] = 1/2 + p(n)$$
+
+
+If $O$ is instantiated with $TR$ then D is simulating $Priv^{CPA}_{TR}$ and so:
+
+$$Pr[D^{TR} \rightarrow 1] = Pr[A \textrm{ wins } Priv^{CPA}_{TR}] = 1/2 + \epsilon$$
+
+
+$$Pr[D^F \rightarrow 1]-Pr[D^{TR} \rightarrow 1] = p(n)$$
+
+This contradicts with our original assumption that F is a PRF and:
+
+$$|Pr[D^{F_k}\rightarrow 1] - Pr[D^{\{0,1\}^n}\rightarrow1]| \leq \epsilon$$
+
+
+Therefore if $F$ is a PRF, $\Pi$ is a CPA secure scheme.
+
+\end{document}
+
