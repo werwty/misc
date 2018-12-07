@@ -1,0 +1,263 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{listings}
+
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\usetikzlibrary{arrows}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+	
+	% --------------------------------------------------------------
+	%                         Start here
+	% --------------------------------------------------------------
+	
+	%\renewcommand{\qedsymbol}{\filledbox}
+	
+	\title{Homework 3}%replace X with the appropriate number
+	\author{Bihan Zhang - bzhang28 %replace with your name
+		CSC 505} %if necessary, replace with your course title
+	
+	\maketitle
+	
+	
+	\begin{question}{1d} 
+
+		Algorithm:
+		
+		Build an array of size v+1. each element of the array keeps track of the optimal amount of coins it takes to construct it.
+\begin{lstlisting}
+def makeChange(denoms, value):
+	
+	# initialize array with infinity for all values
+	dynamic_array = [float("inf") for i in range(0, value+1)]
+	# except for the first value, 0. This is the base case:
+	# it takes exactly 0 coins to create 0 value
+	dynamic_array[0] = 0
+			
+	for i in range(1, value+1):
+		for j in range(0, len(denoms)):
+	
+			if (denoms[j] <= i):
+			  a = dynamic_array[i-denoms[j]]
+			  if a < float("inf") and a + 1 < dynamic_array[i]:
+			    dynamic_array[i]= a + 1
+			
+	return dynamic_array[value]; 
+\end{lstlisting}
+		
+		For the inputs value=12, denoms=[1,6] on initialization
+		
+		\begin{lstlisting}
+		dynamic_array = [0, inf, inf, inf, inf, inf, inf, 
+					inf, inf, inf, inf, inf, inf]
+		\end{lstlisting}
+		
+		After the first iteration we get:
+		\begin{lstlisting}
+		[0, 1, inf, inf, inf, inf, inf, inf, 
+		inf, inf, inf, inf, inf]		
+		\end{lstlisting}
+		Since the only possible coin we can use for the first 5 iterations is the 1 cent coin, $dynamic\_array[i]$ just continues incrementing by one from $dynamic\_array[i-1]$.
+		
+		On the 6th iteration, we see the 6 cent coin come in, and we get:
+		\begin{lstlisting}
+		[0, 1, 2, 3, 4, 5, 1, inf, inf, inf, inf, inf, inf]		
+		\end{lstlisting}
+		
+		For iteration 7-11, we continue incrementing by one from $dynamic\_array[i-1]$, until we finish at iteration 12, where we increment by one form $dynamic\_array[i-6]$, and we get:
+		\begin{lstlisting}
+		[0, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 2]		
+		\end{lstlisting}
+		
+
+		
+		
+		Runtime: Since there are two loops, one of size n (for coin value), and one of size d (for coin denominations) The runtime of this is $\Theta(n*d)$ this can be treated the same as $\Theta(n)$ since d is of a fixed size. The space complexity of this algorithm is $O(n)$ since we only need on matrix of size n.
+			\end{question}
+	\begin{question}{3a}
+		
+		Take the substring x[i,...,j], if $x[i]==x[j]$ there is a palindrome of length $>=2$. If $x[i] != x[j]$, then we can consider instead the substrings x[i+1,....,j], x[i,....,j-1].
+		
+			$$L(i, j) = L (i+1, j-1) + 2 \text{ if } x[i]=x[j]$$
+			$$L(i, j) = max(L(i+1, j), L(i,j-1 )) \text{ otherwise}$$
+	
+	\end{question}
+
+	\begin{question}{3b}
+Algorithm: Create a 2d array of size len(X) by len(X), each l[i][j] will store the longest palindrome in X[i...j]. 
+Each element L[i][i] should be 1, since X[i...i] is a palindrome of 1.
+
+Then for each substring, check if X[i] and X[j] are the same character, if they are, we know that the length of the longest substring is the length of L(X[i+1...j-1]) + 2.
+
+If X[i] and X[j] are not equivalent, we know the longest substring is either in L(i+1, j) or L(i, j-1), whichever is greater.
+
+		
+		\begin{lstlisting}
+def MPSP(X):
+	l = [[0 for i in range(len(X))] for i in range(len(X))]
+	
+	# initialized l[i][i] with 1s, since each 
+	# letter is a palindrome of length 1
+	for i in range(len(X)):
+		l[i][i]=1
+	
+	for s in range(1, len(X)):
+		for i in range(len(X)-s):         
+			j= i+s
+			if X[i] == X[j]:
+				l[i][j] = l[i+1][j-1]+2
+			else:
+				l[i][j] = max(l[i+1][j], l[i][j-1])
+	return l[0][len(X)-1]
+					
+					
+		\end{lstlisting}
+		
+		
+		Let's work through an example of running MPSP on the string $asdfda$
+		
+		The L matrix looks like the following on initialization, because $L(0,0)=1$, $L(1,1)=1$, and so on.
+		\begin{lstlisting}
+		1 0 0 0 0 0
+		0 1 0 0 0 0
+		0 0 1 0 0 0
+		0 0 0 1 0 0
+		0 0 0 0 1 0
+		0 0 0 0 0 1
+		\end{lstlisting}
+		
+		On the second iteration we look at the substring $'as'$, this isn't a palindrome, and so we fill the matrix $L[0][1]$ with 1, since the longest palidrome is still 1
+		
+		\begin{lstlisting}
+		1 1 0 0 0 0
+		0 1 0 0 0 0
+		0 0 1 0 0 0
+		0 0 0 1 0 0
+		0 0 0 0 1 0
+		0 0 0 0 0 1
+		\end{lstlisting}
+		
+		This continues on for a while until we get to i=2 j=4, or the substring 'dfd', since $X[i]==X[j]$ we check $L(3,3)$ and increment this by 2 to get L(2,4)=3. 
+		
+		\begin{lstlisting}
+		1 1 1 0 0 0
+		0 1 1 1 0 0
+		0 0 1 1 3 0
+		0 0 0 1 1 0
+		0 0 0 0 1 1
+		0 0 0 0 0 1
+		\end{lstlisting}
+		
+		This continues on until the program concludes and we see the longest palindrome is 5:
+		\begin{lstlisting}
+		1 1 1 1 3 5
+		0 1 1 1 3 3
+		0 0 1 1 3 3
+		0 0 0 1 1 1
+		0 0 0 0 1 1
+		0 0 0 0 0 1
+		\end{lstlisting}
+		
+		
+				
+		The runtime of this algorithm is equivalent to $\sum_{i=1}^{n}{\sum_{s=0}^{n-s}{1}}$ which is in $O(n^2)$
+
+
+	\end{question}
+
+	\begin{question}{4}
+		Place each tower $y_j$ as far from the houses as possible while maintaining the property that there is a tower within distance d. Start by placing the first tower $y_0$ at $x_0 + d$. Then for each subsequent house, check if the last tower is within distance d. If the last tower is not within distance d, then place the next tower $x_n+d$ away from that house.
+		\begin{lstlisting}
+def place_towers(d, x):
+	y[0] = x[0] + d
+	j=0
+	
+	for i in range(1,len(x)):
+		if x[i]-y[j] > d:
+			j+=1
+			y[j] = x[i]+d
+\end{lstlisting}
+
+
+Let's work through and example of this with $d=2$ and $x=[0,1,2,3,4,5,6]$
+
+We place the first tower at $x_0 + d$, so $y=[2]$.
+Continuing down the $x$ list 1 is within range, 2 is within range, so is 3 and 4. 
+5 is not within range so we add a tower at $5+2=7$, $y=[2,7]$. 6 is also within range of this. So we end up with $y=[2,7]$.
+
+This algorithm runs in $O(n)$ time, we only run through n comparisons in the loop. \\
+
+Let O be the optimal solution to the tower placing problem, that places $z$ towers at distances $d_1<d_2<...d_z$ none of which overlap.
+
+Let PT be our solution as described by the above algorithm, where we place $j$ towers at distances $y_1<y_2< ... y_j$.\\
+
+Claim1: $z\geq j$ (the number of towers allocated by the optimal solution is greater than or equal to the number of towers allocated by PT)\\
+
+Claim2: $d_z\leq y_j$ (The tower placed by the optimal solution is not greater than the tower placed by PT)
+
+
+In the trivial case of 0 houses, O and PT both generate 0 towers, which is equivalent.
+
+In the case of 1 house, we can prove O is equivalent to PT via contradiction.
+
+Suppose for the sake of contradiction that Claim1 and Claim2 are false, then either $z=0$ or $d_1 > y_1$ have to be true. Since we're assuming that there is a house and O is a solution, the first house must get some coverage from the tower. $z$ must be 1, so $d_1 > y_1$ must be true. Since $y_1$ was placed at $x_1+d$, $d_1$ being greater means that $x_1$ gets no coverage from $d_1$. This is a contradiction, thus Claim1 and Claim2 must be true for a single house.
+
+
+In the case of more than one house we can prove O is equivalent to PT via more contradiction.
+Suppose for the sake of contradiction that Claim1 and Claim2 are false, let k be the smallest index for which Claim1 and Claim2 fails. 
+
+For the index (k-1) Claim1 and Claim2 is true. So we know $d_{k-1} \leq y_{k-1}$. 
+But for index k we assume $d_k > y_k$ since we know $y_k - y{k-1} = d$ there is some space between $d_{k-1}$ and $d_k$ will not be covered. so some $x_{k-1/2}$ will not be covered by O.
+This leads to a contradiction, therefore Claim1 and Claim2 must be true for all houses, and O is equivalent to PT.
+
+
+		
+	\end{question}
+
+	\begin{question}{5}
+		
+		Step 1: MAKE-SET each of $\{x_1\},..., \{x_n\}$.\\
+		Step 2: Union each of $x_{n-1}, x_n$ e.g. UNION($x_1$,$x_2$) UNION($x_3$,$x_4$)\\
+		Step 3: Union each of these resulting sets  UNION(UNION($x_1$,$x_2$), UNION($x_3$,$x_4$)\\
+		This results in binomial tree that has ${k \choose i}$ nodes at depth $i$ ($2^k$ node total). At least half of the $n$ nodes are at depth $log(n)/2$ and lower. 
+		So running FIND-SET should take $\Omega(log(n))$ time. Assume $m$ is large ($m-2n$ is runtime $\Omega(n)$). $\Omega((m-2n)log(n)) = \Omega(mlog(n))$.
+	\end{question}
+	\clearpage
+	
+	
+	% --------------------------------------------------------------
+	%     You don't have to mess with anything below this line.
+	% --------------------------------------------------------------
+	
+\end{document}

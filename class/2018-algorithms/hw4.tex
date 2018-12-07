@@ -1,0 +1,176 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{listings}
+
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\usetikzlibrary{arrows}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+	
+	% --------------------------------------------------------------
+	%                         Start here
+	% --------------------------------------------------------------
+	
+	%\renewcommand{\qedsymbol}{\filledbox}
+	
+	\title{Homework 3}%replace X with the appropriate number
+	\author{Bihan Zhang - bzhang28 %replace with your name
+		CSC 505} %if necessary, replace with your course title
+	
+	\maketitle
+	
+	
+	\begin{question}{1}
+	Let's decompose this proof into two parts. Part A: If G has an Eulerian Tour then $\forall {v \epsilon V}$$deg^+(v)= deg^-(v)$. Part B: If $\forall {v \epsilon V}$ $deg^+(v)= deg^-(v)$ then G has an Eulerian Tour
+	
+	Proof for Part A:
+	 Let's call the Eulerian Tour of G, C. If C is a simple cycle, then $\forall {v \epsilon V}$ $deg^+(v)= deg^-(v)=1$. Assume C is a complex cycle, it must contain a simple cycle. Let $E'$ be the set of edges in the simple cycle, $C-E'$ is still an eulerian tour of $G-E'$. Every time a simple cycle is removed, $deg^+$ and $deg^-$ of a vertex on the cycle is decreased by 1. If we continue removing simple cycles until no edges are left, all $deg^+$ and $deg^-$ are 0. Since we removed the same amount of $deg^+$ and $deg^-$ for every vertex, the in-degree and out-degree of each vertex must be the same.\\
+	
+	Proof for Part B:
+	
+	In a strongly connected graph there must always be a path starting from $v$ and ends at $v$. Pick any vertex (without loss of generality) $v \epsilon V$ and find a cycle $C$ that starts and ends at $v$. Compute a subgraph $G'=G-C$ $\forall {v \epsilon G'}$ $deg^+(v)= deg^-(v)$. If we then pick a vertex $v'$ in $C$ that has edges shared with another cycle $C'$, We can repeat this process to build a large cycle that goes around C until it gets to the edged shared with $C'$, then goes around $C'$, and finishes going around $C$. This is a eulerian tour, so for every graph with $\forall {v \epsilon V}$$deg^+(v)= deg^-(v)$ there exists an Eulerian tour.
+	
+	
+	\end{question}
+
+	\begin{question}{2a}
+		
+		This does return a MST. Proof: If some $e$ disconnects the graph, $e$ is not removed. Since we remove $e$ if it's a part of a cycle, the resulting output has no cycles, and is connected (and therefore is a tree). Since $e$ is sorted in decreasing order by weight, only the maximum edge on the cycle is removed. So the resulting tree must have the minimum weight. 
+		
+	\end{question}
+\begin{question}{2b}
+This does not always return a MST. Counterexample: Let $G={V,E}$ $V={A, B, C}$ $E={(A, B, 100), (A, C, 1), (B, C, 1)}$
+Assume that e is taken in the order it's given. The generated MST would have weight 101, whereas an actual MST should have weight 2.
+
+\end{question}
+		\begin{question}{2c}
+	This does return a MST. The only edges removed are maximum weight on a cycle. Since the graph remains connected (C-e always results in a connected graph), the resulting graph is a tree. And since the maximum edges of the cycle were removed, the result is a MST.
+	\end{question}
+
+\begin{question}{3a}
+	Assume for the sake of contradiction that e* is on an MST $T_1$, and that v and u is joined by a path consisting of edges that are cheaper than e*. Removing e* from $T_1$ results in $v$ and $u$ being in another tree $T_2$. Since $T_2$ is still connected and weights less than $T_1$, $T_1$ could not have been an MST. This leads to a contradiction, therefore e* must not be on the MST.
+\end{question}
+	\begin{question}{3b}
+	Let u,v be the two verticies bordering e*, $e*=(u,v)$
+	Run the DFS algorithm described in section 22.4 of the text starting from u, and only consider edges of weight less than e*.
+	
+	If at the end u and v are connected, $e*$ is not a part of a MST, since e* is the edge weighing the most on the cycle from u to v.
+	
+	If u and v are not connected the e* must be on the MST. 
+	
+	The runtime of this algorithm is the same as the DFS algorithm $O(V+E)$
+\end{question}
+
+
+\begin{question}{4}
+
+	\begin{lstlisting}
+	INITIALIZE-SINGLE-SOURCE(G, s)
+	
+	for each vertex v in G.V
+		v.d = inf
+		v.parent = NIL
+		v.usp = 0
+	s.d = 0	
+	\end{lstlisting}
+	
+		Modify relax like so:
+	\begin{lstlisting}
+	RELAX(u,v,w)
+		
+	if (v.d == u.d + w(u,v):
+		v.d = u.d + w(u,v)
+		v.parent = u
+		v.usp = 1
+	elif v.d > u.d + w(u,v):
+		v.d = u.d + w(u,v)
+		v.parent = u	
+	\end{lstlisting}
+	
+	For there to be two non-unique shortest paths, the weight of the two must be the same at some vertex. Therefore we can check during RELAX weather or not the weight of the tow paths coincides, if they do, then there is more than one unique shortest path from s to v.
+	The runtime is the same as unmodified Djkstra's $O(V^2 + E) = O(V^2)$, notice that all we do is up to one more comparisons per RELAX, the number of INSERT, DECREASE-KEY, and EXTRACT-MIN remains the same.
+\end{question}
+
+\begin{question}{5}
+
+	Algorithm description:
+	
+	Modify initialize-single source like so- also keeping track of the number of edges it takes to get to a certain vertex, and the path to do so.
+	\begin{lstlisting}
+	INITIALIZE-SINGLE-SOURCE(G, s)
+	
+	for each vertex v in G.V
+		v.d = inf
+		v.parent = NIL
+		v.edges = 0
+		v.path=[]
+	s.d = 0	
+	\end{lstlisting}
+	
+	Modify relax like so:
+		\begin{lstlisting}
+	RELAX(u,v,w)
+	
+	#get the lexiographically shortest path
+	if (v.d == u.d + w(u,v) and v.edges==u.edges+1 and v.path>u.path):
+		v.d = u.d + w(u,v)
+		v.parent = u
+		v.edges = u.edges +1
+		v.path = u.path.append(u)
+	elif (v.d == u.d + w(u,v) and v.edges>u.edges+1):
+			v.d = u.d + w(u,v)
+		v.parent = u
+		v.edges = u.edges +1
+		v.path = u.path.append(u)
+	elif v.d > u.d + w(u,v):
+		v.d = u.d + w(u,v)
+		v.parent = u
+		v.edges = u.edges +1
+		v.path = u.path.append(u)
+	\end{lstlisting}
+	This way if the weight is equivalent for two path from u, to v, choose the path with the shortest edge. If the number of edges are equal, choose the lexiographically shortest path.
+	
+	The proof of correctness is the same as that of dijkstra's algorithm (Theorem 24.6). The runtime is the same as Dijkstra's $O(V^2 + E) = O(V^2)$, notice that all we do is up to two more comparisons per RELAX, the number of INSERT, DECREASE-KEY, and EXTRACT-MIN remains the same.
+	
+	
+	
+\end{question}
+	\clearpage
+	
+	
+	% --------------------------------------------------------------
+	%     You don't have to mess with anything below this line.
+	% --------------------------------------------------------------
+	
+\end{document}

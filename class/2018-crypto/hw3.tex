@@ -1,0 +1,171 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{listings}
+
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\usetikzlibrary{arrows}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+	
+	% --------------------------------------------------------------
+	%                         Start here
+	% --------------------------------------------------------------
+	
+	%\renewcommand{\qedsymbol}{\filledbox}
+
+	\title{Homework 1}%replace X with the appropriate number
+	\author{Bihan Zhang - bzhang28 %replace with your name
+		CSC 591} %if necessary, replace with your course title
+	
+	\maketitle
+	
+	
+	\begin{question}{1} 
+		This is not a secure MAC. An attack can be constructed as follows:
+		
+		
+		1. Let $A$ be a PPT adversary with oracle access to $MAC_k(m)$
+		
+		2. $A$ will query $MAC_k()$ with $m=m_0||m_1$ and will receive $t$. A will parse $t$ into $t=t_0||t_1=F_k(0||m_0)||F_k(1||m_1)$ 
+		
+		3. $A$ will query $MAC_k()$ with $m'=m_2||m_3$ (making sure to select $m_3$ such that $m_3 \neq m_1$, and to select $m_2$ such that $m_2\neq m_0$) and will receive $t'$. A will parse $t'$ into $t'=t_2||t_3=F_k(0||m_2)||F_k(1||m_3)$
+		
+		4. $A$ will output $m*=m_0||m_3$, $t*=t_0||t_3$\\
+		
+		$Verify(m^*, t^*)$ will output 1, since:
+		$$MAC_k(m^*)=F_k(0||m_0)||F_k(1||m_3)$$ 
+		$$=t^*$$
+		
+		 and message $m^*$ has not been queried by the adversary before. 
+		
+	\end{question}
+	\begin{question}{2}
+		This is not a secure MAC. An attack can be constructed as follows:
+		
+		1. Let $A$ be a PPT adversary. $A$ does not need access to an oracle. 
+		
+		2. $A$ will output $r=<1>||m^*$, $m=m^*$, $t^*=\{0\}^{n/2}$\\
+		
+		$Verify(r, m^*, t^*)$ will output 1. since $$MAC_k(r, m^*)= F_k(r)\oplus F_k(<1>||m^*)$$ $$=F_k(<1>||m^*)\oplus F_k(<1>||m^*)$$ $$=\{0\}^{n/2}$$$$=t^*$$
+			
+			
+	\end{question}
+
+	\begin{question}{3}
+		This is not a collision resistant construction.
+		
+		Given a message $x$ of length $2^{n-1}<L<2^n$, $x$ and $x||0$ will have the same number of blocks $B$, and when put through the modified Merkle-Damgard, the output $z_B$ will be the same. 
+		
+		
+		Attack: Let $x$ be some random message of length $2^{n-1}<L<2^n$, and let $x'$ be $x||0$. 
+		$z_0$ of both $x$ and $x'$ will be the same. $z_{1,..,{B-1}}$ will be the same for both $x$ and $x'$.
+		
+		Since Merkle-Damgard pads $x$ and $x'$ with 0s until they are of length $2^n$, $m_B$ would be the same for both $x$ and $x'$.
+		
+		Therefore the resulting $z_B$ would collide for $x$ and $x'$.
+		
+	\end{question}
+	
+	\begin{question}{4}
+		This is a collision resistant construction. Let $H$ be this modified Merkle-Damgard construction. If $h$ is collision resistant, then so is $H$.
+		
+		Prf: For any $s$ a collision in $H^s$ will lead to a collision in $h^s$. Let $x= x_1,...,x_B$ and $x'=x'_1,...,x'_B$ be two different strings of length $L$ and $L'$ such that $H^s(x)= H^s(x')$. 
+		
+		Case 1: $L\neq L'$ We assumed $H^s(x) = H^s(x')$, but since $h^s(z_b||L) != h^s(z_b||L')$ this would be a contradiction. Therefore $L==L'$
+		
+		Case 2: $L==L'$, this means that $h^s(z_b||L) != h^s(z_b||L')$ and $z_b == z'_b$. $z_b = h^s(z_{b-1}||x_b)$ and $z'_b = h^s(z'_{b-1}||x'_b)$ therefore $z_{b-1}||x_b == z'_{b-1}||x'_b$ otherwise h would not be collision resistant. By induction, we can keep going back $z_{i-1}||x_i$ bits and find that $z'_{i-1}||z'_b$ must also be equivalent.
+		Until we get to i=2 and see that $z_1||x_2 == z'_1||x'_2 == x_1||x_2 == x'_1||x'_2$
+		
+		
+		So if h is collision resistant then H must also be collision resistant.
+		
+		
+		
+	\end{question}	
+		
+	\begin{question}{5}
+		The adversary can forge any message $j<i$. By running $f^{i-j}$ more times on $\sigma_i$. 
+		
+		Construct an Adversary as follows:
+		
+		1. Let $A_{forge}$ be the adversary initialized with $y$ and $(i, \sigma_i)$
+		
+		2. $A_{forge}$ will randomly pick some $j<i$
+		
+		3. $A_{forge}$ will compute $$\sigma_j = f^{(i-j)}(\sigma_i)$$
+		$$=f^{(i-j)}(f^{(n-i)}(x))$$
+		$$=f^{(i-j+n-i)}(x)$$
+		$$=f^{(n-j)}(x)$$
+		
+		4. $A_{forge}$ will output $(j, \sigma_j)$, This will pass verification as proven by the computation in step 3.
+	\end{question}
+	
+		
+	\begin{question}{6}
+		If $f$ is a owf, no PPT adversary given a signature on $i$ can output a forgery on any message $j > i$, except with negligible probability. 
+		
+		Assume for the sake of contradiction there exists some $A_{forge}$ such that given $(f, i, \sigma_i)$ can output a forgery $(j, \sigma_j)$ where $j>i$ with probability $Pr[A_{forge} \text{ wins Sig-forge}] > p(n)$, where $p(n)$ is some non-negligible function. We can utilize this $A_{forge}$ to craft an $A_{owf}$ via the following steps:
+		
+		Note: $A_{owf}$ takes in some input $z = \sigma_i$ and will attempt to output $f^{-1}(z)$
+		
+		1. Let $A_{owf}$ have access to $A_{forge}$. $A_{forge}$ is initialized with $(y, i, \sigma_i)$
+				
+		2. When $A_{forge}$ make oracle queries $j$, if $j<i$ answer by calculating $f^{i-j}(z)$. If $j>i$ abort and retry.
+		
+		3. When $A_{forge}$ outputs some forgery $(j, \sigma_j)$ where $j>i$ 	
+		
+		$A_{owf}$ outputs $f^{(j-i-1)}(\sigma_j)$.
+		
+		$$f^{(j-i-1)}(\sigma_j)$$ 
+		$$= f^{(j-i-1)}(f^{(n-j)}(x)$$
+		$$=f^{j-i-1+n-j}(x)$$
+		$$=f^{n-i-1}(x)$$
+		$$=f^{-1}(f^{n-i}(x))$$
+		$$= f^{-1}(z)$$
+		
+		$Pr[A_{owf} \text{ can break } f]= Pr[A_{forge} \text{ wins Sig-forge}] > p(n)$
+		
+		
+		So if such a $A_{forge}$ exists, we can  use it to invert the one way function $f$ with non-negligible probability. 
+		Which leads to a contradiction. Thus no such $A_{forge}$ that outputs a forgery with $j>i$ can exist.
+		
+	\end{question}
+		
+		
+	
+	% --------------------------------------------------------------
+	%     You don't have to mess with anything below this line.
+	% --------------------------------------------------------------
+	
+\end{document}

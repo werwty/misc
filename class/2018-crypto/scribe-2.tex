@@ -71,7 +71,7 @@
 
 \begin{document}
 
-\lecture{CPA-Secure Encryption Algorithms}{9/26/18}{Bihan Zhang}
+\lecture{CPA-Secure Encryption Scheme}{9/26/18}{Bihan Zhang}
 
 \section*{Topic/Problem}
 This is the second lecture on CPA, with a focus on constructing a CPA-secure encryption scheme with a PRF.
@@ -91,9 +91,9 @@ The CPA game ($Priv^{CPA}_{A,\Pi}(n)$) is as follows:
 
 \hspace{\parindent}	4. Challenge Phase: 
 
-\hspace{\parindent}\hspace{\parindent} a. $A_{PPT}$ passes $\{m_0, m1\}$ to $\Pi$. 
+\hspace{\parindent}\hspace{\parindent} a. $A_{PPT}$ passes $\{m_0, m_1\}$ to $\Pi$. 
 
-\hspace{\parindent}\hspace{\parindent} b. $\Pi$ picks either $m_0$ or $m_1$ and returns $c_b= Enc(m_b)$ 
+\hspace{\parindent}\hspace{\parindent} b. $\Pi$ picks a random bit $b\gets_R \{0,1\}$ and returns $c_b= Enc(m_b)$ 
 
 \hspace{\parindent}\hspace{\parindent} c. $A_{PPT}$ guesses $b'$ ($b'$ is whichever $m_0$, or $m_1$ $A_{PPT}$ thinks $\Pi$ encrypted.
 
@@ -102,40 +102,46 @@ The CPA game ($Priv^{CPA}_{A,\Pi}(n)$) is as follows:
 
 For a CPA secure encryption scheme:
 
-$$Pr[A \textrm{ wins } Priv_\Pi^{CPA}] = 1/2 + \epsilon$$
-$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] = 1/2 + \epsilon$$
-$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] - Pr[A \textrm{ wins } Priv_\Pi^{CPA}] \leq \epsilon$$
+$$Pr[A \textrm{ wins } Priv_\Pi^{CPA}] = 1/2 + \epsilon_1$$
+$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] = 1/2 + \epsilon_2$$
+$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] - Pr[A \textrm{ wins } Priv_\Pi^{CPA}] \leq |\epsilon_1 - \epsilon_2|$$
+
+Where $\epsilon_1, \epsilon_2$ are both negligible functions.
+
 
 -----------------------------------------
 
 A function $F: \{0,1\}^* \times \{0,1\}^* \rightarrow \{0,1\}^*$ is considered pseudorandom if for all distinguishers $D_{PPT}$ the following holds true:\\
 
-$$|Pr[D^{F_k}\rightarrow 1] - Pr[D^{\{0,1\}^n}\rightarrow1]| \leq \epsilon$$\\
+$$|Pr[D^{F_k}\rightarrow 1] - Pr[D^{TR}\rightarrow1]| \leq \epsilon$$
+
+Where $TR$ is truly random, and $\epsilon$ is a negligible function.\\
 
 Or, in layman's terms, there does not exist a distinguisher that can tell apart the output of a PRF, and the output of a truly random function. The distinguisher can play the PRF Game in order to prove that it can tell the the two apart.
 
 
 The PRF Game:\\
 
-\hspace{\parindent} 1. Let $F$ be an encryption oracle.
+\hspace{\parindent} 1. Let $O$ be an oracle instantiated with either $F_k$ or with $TR$.
 
-\hspace{\parindent} 2. Let $D_{PPT}$ be a distinguisher with access to $F$.
+\hspace{\parindent} 2. Let $D_{PPT}$ be a distinguisher with access to $O$.
 
-\hspace{\parindent} 3. $D_{PPT}$ passes $x_i$ to F
+\hspace{\parindent} 3. $D_{PPT}$ passes $x_i$ to $O$
 
-\hspace{\parindent} 4. $F$ will either return $y_i = PRF(x_i)$ or $y_i = TR()$
+\hspace{\parindent} 4. $O$ will either return $y_i = PRF(x_i)$ or $y_i = TR()$
 
 \hspace{\parindent} 5. $D_{PPT}$ guesses whether $y_i$ came from the PRF or from TR.
 
 
-$$D_{PPT} \textrm{ wins if }|Pr[D^{F_k}\rightarrow 1] - Pr[D^{\{0,1\}^n}=1]| = p(n)$$\\
+$$D_{PPT} \textrm{ wins if }|Pr[D^{F_k}\rightarrow 1] - Pr[D^{\{0,1\}^n}=1]| = p(n)$$
+Where $p(n)$ is a non-negligible function.
 
 
 \subsection*{Scheme}
 CPA secure encryption: 
 Let $F$ be a pseudorandom function. Let $\Pi$ be (Gen, Enc, Dec) as described:\\
 
-\hspace{\parindent} Gen: $k \epsilon \{0,1\}^n$\\
+\hspace{\parindent} Gen: $k \in \{0,1\}^n$\\
 
 \hspace{\parindent} Enc(k, m): Given $k \epsilon \{0,1\}^n$ and $m \epsilon \{0,1\}^n$ choose a uniformly random $r \epsilon \{0,1\}^n$ and construct $c = <F_k(r)\oplus m, r>$\\
 
@@ -157,9 +163,9 @@ Assume for the sake of contradiction that there exists an Adversary $A_{CPA}$ th
 
 
 $$Pr[A \textrm{ wins } Priv_\Pi^{CPA}] = 1/2 + p(n)$$
-$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] = 1/2 + g/2^n$$
+$$Pr[A \textrm{ wins } Priv_{TR}^{CPA}] = 1/2 + q/2^n$$
 
-The $g/2^n$ term comes from the number of previous guesses by adversary. There is a negliable chance of the random string $r$ repeating. This is very unlikely, so we'll treat $g/2^n = \epsilon$
+$q$ is the number of queries performed by the adversary. There is a chance that the adversary has seen the random string $r$ repeating, and this chance increases with the number of queries. This is very unlikely, so we'll treat $q/2^n = \epsilon$, where $\epsilon$ is a negligible function.
 
 
 $$|Pr[A \textrm{ wins } Priv_{TR}^{CPA}]-Pr[A \textrm{ wins } Priv_\Pi^{CPA}] | = p(n)$$
@@ -167,27 +173,25 @@ $$|Pr[A \textrm{ wins } Priv_{TR}^{CPA}]-Pr[A \textrm{ wins } Priv_\Pi^{CPA}] | 
 \textbf{Reduction}
 A distinguisher $D$ for $F$ can be constructed as follows:
 
-	\hspace{\parindent}Assume $D$ has oracle access to a function $O$. $O$ is either instantiated with F, or with a truly random function TF.
+	\hspace{\parindent}Assume $D$ has oracle access to a function $O$. $O$ is either instantiated with $F$, or with a truly random function $TF$.
 	
-	\hspace{\parindent}Assume also that D can run adversary $A_{CPA}$
+	\hspace{\parindent}Assume also that $D$ can run adversary $A_{CPA}$
 	
-	\hspace{\parindent}When $A_{CPA}$ is in it's training phase, it'll ask for encryptions of messages $m_i$, when this happens do:
+	\hspace{\parindent}When $A_{CPA}$ is in it's training phase, it'll ask for encryptions of messages $m_i$, when this happens $D$ does the following:
 	
-	\hspace{\parindent} 1. Pick a random $r_i = {0,1}^n$
+	\hspace{\parindent} 1. Pick a random $r_i = \{0,1\}^n$
 	
-	\hspace{\parindent} 2. Compute $y_i:=O(r_i)$ NOTE: replace this with:
-	Query the oracle with ri and recieve yi
-	because O is not a function caputured by the adversary
-	
+	\hspace{\parindent} 2. Query the Oracle $O$ with $r_i$ and receive $y_i$
+		
 	\hspace{\parindent} 3. Output $<r_i, m_i \oplus y_i>$\\
-	
-	\hspace{\parindent} When $A_{CPA}$ challenges with $m_0, m_1$, do:
+
+	\hspace{\parindent} When $A_{CPA}$ challenges with $m_0, m_1$, $D$ does the following:
 	
 	\hspace{\parindent} 1. Pick $b\gets_R \{0,1\}$ 
 	
 	\hspace{\parindent} 2. Pick a random $r_i = {0,1}^n$
 	
-	\hspace{\parindent} 3. Compute $y_i:=O(r_i)$
+	\hspace{\parindent} 3. Query the Oracle $O$ with $r_i$ and receive $y_i$
 	
 	\hspace{\parindent} 4.  Output $\langle r_i, m_b \oplus y_i \rangle$\\
 	
@@ -200,13 +204,16 @@ If $O$ is instantiated with $F$ then the reduction is perfectly simulating the g
 
 $$Pr[D^F \rightarrow 1] = Pr[A \textrm{ wins } Priv^{CPA}_\Pi] = 1/2 + p(n)$$
 
+Where $p(n)$ is non-negligible.
 
-If $O$ is instantiated with $TR$ then D is simulating $Priv^{CPA}_{TR}$ and so:
+
+If $O$ is instantiated with $TR$ then $D$ is simulating $Priv^{CPA}_{TR}$ and so:
 
 $$Pr[D^{TR} \rightarrow 1] = Pr[A \textrm{ wins } Priv^{CPA}_{TR}] = 1/2 + \epsilon$$
 
+Where $\epsilon$ is negligible
 
-$$Pr[D^F \rightarrow 1]-Pr[D^{TR} \rightarrow 1] = p(n)$$
+$$|Pr[D^F \rightarrow 1]-Pr[D^{TR} \rightarrow 1]| = p(n) - \epsilon$$
 
 This contradicts with our original assumption that F is a PRF and:
 

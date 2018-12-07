@@ -1,0 +1,218 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{listings}
+
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\usetikzlibrary{arrows}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+	
+	% --------------------------------------------------------------
+	%                         Start here
+	% --------------------------------------------------------------
+	
+	%\renewcommand{\qedsymbol}{\filledbox}
+
+	\title{Homework 4}%replace X with the appropriate number
+	\author{Bihan Zhang - bzhang28 %replace with your name
+		CSC 591} %if necessary, replace with your course title
+	
+	\maketitle
+	
+	
+	\begin{question}{1} 
+A commitment scheme is a pair of algorithms, S and R that exchanges messages in two phases: commitment phase and opening phase. During the commitment phase, S and R exchanges some messages. At the end of the commitment phase, R should not learn anything about m, this is the property called Hiding. During the opening phase, S will send a key (n) to R, and R should use the key to 'open' the output that was sent during the commitment phase to retrieve m. Any malicious sender S, once the commitment phase was completed with transcript C, should not be able to provide $(m_1, key_1)$ and $(m_2, key_2)$ such that R will accept both when considering C, this is called the Binding Property. 
+
+These properties can be better defined via the Hiding Game, and the Binding Game.\\
+
+Hiding-Game (R*, $\Pi$, n):
+
+1. The adversary R* sends messages $m_0, m_1$ to the challenger
+
+2. the Challenger picks a bit b and executes $\Pi.Comm(m_b)$ while interacting with R*
+
+3. At the end of the commitment phase, R* outputs b'
+
+4. R* wins if b==b'
+
+$\Pi$ is considered hiding if for all PPT R*:
+$$Pr[R* \text{ wins hiding-game } \Pi] \leq 1/2 + negl(n)$$\\
+
+Binding-Game(S*, $\Pi$, C):
+
+1. S* outputs $(m_1, n_1)$, $(m_2, n_2)$
+
+2. S* wins if R accepts $(C, m_1, n_1)$ and $(C, m_2, n_2)$
+$\Pi$ is considered binding if for all PPT S*:
+
+$$Pr[S* \rightarrow (C, m_1, n_1, m_2, n_2) ^ R(C, m_1, n_1)=1 ^R(C, m_2, n_2)=1 ] \leq 1/2 + negl(n)$$
+		
+	\end{question}
+		
+	\begin{question}{2} 
+		To be perfectly Hiding the there has to exist some $(m, n)$ and $(m', n')$ such that $Comm(m,n) == Comm(m',n')$. 
+		
+		To be perfectly binding there cannot exist $(m, n)$ and $(m', n')$ such that $Comm(m,n) == Comm(m', n')$.
+		
+		Therefore there is no way for a scheme to be both perfectly hiding and perfectly binding.
+		\end{question}
+		
+	
+		\begin{question}{3.1} 
+			
+
+		
+			Let $\Pi$ be the El-Gamal commitment scheme.
+			
+			Let $\hat{\Pi}$ be a mental experiment exactly like the El Gamal commitment except the Sender picks some random $r \leftarrow Z_q$ sends $(g^u,g^m g^r)$ to the receiver in the last step. 
+			
+			If the DDH assumption holds, the El-Gamal commitment scheme is computationally hiding. 
+			
+			Assume for the sake of contradiction that there exists some $A_{hiding}(m_0, m_1)$: a PPT adversarial receiver for the $\Pi$ commitment game  such that: $$Pr[A_{hiding} \text{ wins hiding-game } \Pi] > 1/2 + p(n)$$ where $p(n)$ is non-negligible and,
+			
+			$$Pr[A_{hiding} \text{ wins hiding-game } \hat{\Pi}] = 1/2$$
+			
+			 we can use $A_{hiding}$ to construct an adversary to break DDH. \\
+			
+			$A^{PPT}_{DDH}(G, g, q, X=g^x, Y=g^y, Z=g^z)$ would do the following:
+			
+			1. Pick $h=X$
+			
+			2. Initialize $A_{hiding}$ with $G, g, q, h$. $A_{hiding}$ will send two messages $m_0$ and $m_1$
+			
+			3. Flip a coin and choose $b \leftarrow^\$ \{0,1\}$. 
+			
+			4. Send $(Y, Z*g^{m_b})$ to $A_{hiding}$
+			
+			5. $A_{hiding}$ will output some bit $b'$, return 1 if $b==b'$ ($z=xy$) or 0 otherwise ($z\neq xy$)
+			
+			Analysis:\\
+			
+			If $Z = g^{xy}$, the probability of us winning the DDH game is the same as that of $A_{hiding}$ outputting the correct bit. 
+			$$Pr[A_{DDH} \text{winning DDH-game}] = Pr[A_{hiding} \text{ wins hiding-game } \Pi] > 1/2 + p(n)$$
+			
+			Since $$Com(Y, Z*g^{m_b}) = g^y, g^{m_b}*h^y$$
+			$$= g^y, g^{m_b}*{g^x}^y$$
+			$$= g^y, g^{m_b}*g^z$$
+			
+			If $Z \neq g^{xy}$, the probability of us winning the DDH game is
+			
+			$$Pr[A_{DDH} \text{winning DDH-game}] = Pr[A_{hiding} \text{ wins hiding-game } \hat{\Pi}] = 1/2$$	
+			
+			Combining both cases gives us the probability:
+			$$Pr[A_{DDH} \text{winning DDH-game}] = Pr[A_{hiding} \text{ wins hiding-game } \Pi] - Pr[A_{hiding} \text{ wins hiding-game } \hat{\Pi}] = p(n)$$
+			
+			This is a contradiction to the original assumption, therefore is the DDH assumption holds, the el-gamal commitment must be computationally hiding.
+					
+
+	\end{question}
+	
+	
+			\begin{question}{3.2} 
+				Let $h=g^x$. If the receiver $A$ knows $x$ then $\Pi$ will no longer be computationally hiding. The receiver can easily win the Hiding Game by doing:
+				
+				1. Send $(m_0, m_1)$ to the challenger
+				
+				2. receive $Comm(m_b, u) = (g^u, g^{m_b} h^u)$
+				
+				3. compute ${(g^u)}^x$ and $g^{m_0}$, if $g^{m_b} h^u/{g^u}^x == g^{m_0}$ return 0, otherwise return 1.
+				
+				$$Pr[A \text{ wins the hiding game } ] = 1$$
+				
+			\end{question}
+		
+			\begin{question}{4} 
+				Completeness: 
+				$$\gamma^e = (rx^\beta)^e$$
+				$$=r^e x^{\beta e}$$
+				$$=r^e y^\beta$$
+				$$=\alpha y^\beta$$										
+			\end{question}
+		
+	\begin{question}{4.1} 
+		We can build an extractor for the Guillou-Quisquater identification scheme by running through the interactive proof, and then rewinding:\\
+		
+		1. P sends some $\alpha$
+		
+		2. We choose $\beta \leftarrow^\$ \{0,1\}$ and send $\beta$ to P
+		
+		3. P sends $\gamma$ to us.
+		
+		4. We rewind P's execution to step 2, and send $\beta' \neq \beta$ to P
+		
+		5. P sends $\gamma'$ to us.
+		
+		This gets us two accepting transcripts: $(\alpha, \beta, \gamma)$, $(\alpha, \beta', \gamma')$		 
+		
+	\end{question}	
+
+	\begin{question}{4.2} 
+		Assuming we have two accepting transcripts: $(\alpha, \beta, \gamma)$, $(\alpha, \beta', \gamma')$. Let $\beta$ be the transcript with $\beta=1$ and $\beta'$ be 0, we can compute $\gamma / \gamma'$ to extract x. 		
+		$$\gamma / \gamma' = (rx^1)/(rx^0)$$
+		$$= x^{1-0} =x$$
+	\end{question}	
+
+\begin{question}{4.3} 
+	The transcript of this protocol is:
+	
+	$$P  \rightarrow^\alpha V$$
+		$$P \leftarrow^\beta V$$
+			$$P \rightarrow^\gamma V$$
+\end{question}	
+
+	\begin{question}{4.4} 
+		Simulator(n, e, y):
+		
+		1. pick $\gamma \leftarrow^\$ Z_n$
+		
+		2. pick $\beta \leftarrow^\$ \{0,1\}$
+		
+		3. compute $\alpha = \gamma ^e / y^\beta$
+		
+		4. output $\alpha, \beta, \gamma$
+		
+		This transcript will be accepted because:
+		$$\alpha y^\beta = (\gamma ^e / y^\beta)y^\beta = \gamma ^e$$
+		
+	\end{question}	
+
+
+	\begin{question}{4.5} 
+		Since $\gamma$ and $\beta$ are picked randomly, and $\alpha$ is computed as a result of those two choices, the simulated transcript looks completely random, and no different from a real transcript.
+	\end{question}	
+	% --------------------------------------------------------------
+	%     You don't have to mess with anything below this line.
+	% --------------------------------------------------------------
+	
+\end{document}
