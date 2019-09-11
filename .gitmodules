@@ -1,0 +1,3 @@
+[submodule "2018-graph-theory"]
+	path = class/2018-graph-theory
+	url = git@github.com:werwty/2018-graph-theory.git
