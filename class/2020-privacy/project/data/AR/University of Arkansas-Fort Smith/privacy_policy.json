@@ -1,0 +1,14 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "Contact Tracing \u202fwill be conducted through UAMS and possibly enhanced by trained contact tracers\u202fin close proximity to\u202fcampus, who will protect the privacy of patients who test positive for COVID-19.\u202f \r\n \r\n\r\nThe university is not responsible for contact tracing, and university employees should not disclose the positive status of students under any circumstances. Likewise, employees should not disclose the positive status of any of their colleagues.",
+            "url": "https://campuslife.uafs.edu/services/health-center/covid19",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": false,
+    "is_self_reporting_site_third_party": false,
+    "note": "report via phone 479-788-7080 or email hrdept@uafs.edu"
+}

@@ -1,0 +1,8 @@
+{
+    "urls": ["https://daltonstate.edu/campus_life/coronavirus-update.cms",
+        "https://daltonstate.edu/skins/userfiles/files/student%20self%20screen%20091820.pdf"
+        ],
+    "app": false,
+    "contact_tracing": false,
+    "self_reporting": "You should stay home and complete the COVID-19 Health Reporting Form."
+}

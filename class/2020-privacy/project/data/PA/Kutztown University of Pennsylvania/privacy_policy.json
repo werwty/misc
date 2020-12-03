@@ -1,0 +1,13 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "\nThis information will be confidentially managed ensuring only those with a need to know are informed.\nFor a student, generally those with a need to know are the student\u2019s faculty, dean and certain members of administration.",
+            "url": "https://www.kutztown.edu/news-and-media/announcements/fall-2020/health-update-for-ku-campus.html",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": true,
+    "is_self_reporting_site_third_party": false
+}

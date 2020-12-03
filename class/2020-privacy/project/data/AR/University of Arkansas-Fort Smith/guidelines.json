@@ -1,0 +1,6 @@
+{
+    "urls": "https://campuslife.uafs.edu/services/health-center/covid19",
+    "app": false,
+    "contact_tracing": false,
+    "self_reporting": "Yes, all students, faculty, and staff members will be required to notify the university if they test positive for COVID-19 or if they must self-quarantine."
+}

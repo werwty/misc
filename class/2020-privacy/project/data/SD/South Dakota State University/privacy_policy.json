@@ -1,0 +1,13 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "\n\nInformation will be used by South Dakota State University for emergency management related purposes for the health and safety of the SDSU community in accordance with applicable privacy rules. Please ensure you have provided accurate information that can be used to help protect others.",
+            "url": "https://www.sdstate.edu/jacksrback/covid-19-case-notification-form",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": true,
+    "is_self_reporting_site_third_party": false
+}

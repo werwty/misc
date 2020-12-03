@@ -1,0 +1,9 @@
+{
+    "urls": [
+        "https://coronavirus.uiowa.edu/",
+        "https://coronavirus.uiowa.edu/fall-2020"
+    ],
+    "app": false,
+    "contact_tracing": "The UI will coordinate with the Johnson County Department of Public Health on a unified response for contact tracing and disease investigation for UI community members.\r\nSystems/technology will be explored and used to assist with contact tracing.\r\nA concerted effort will be made to obtain current on-campus addresses and contact information for all students to ensure timely communication in case of testing notification or contact tracing.\r\nThe UI will consider assigned seating in classrooms in order to aid contact tracing.",
+    "self_reporting": "Report positive test results, or that you've been identified as being in close contact with someone who tested positive for COVID-19."
+}

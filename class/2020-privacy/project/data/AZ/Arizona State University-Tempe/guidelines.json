@@ -1,0 +1,9 @@
+{
+    "urls": [
+        "https://eoss.asu.edu/health/announcements/coronavirus/faqs",
+        "https://www.asu.edu/healthcheck/"
+    ],
+    "app": false,
+    "contact_tracing": "What is ASU's plan for contact tracing for both employees and students?\r\nFor ASU students:\r\n\r\nASU students who test positive at ASU Health Services or ASU testing sites will receive care and follow-up contact from an ASU Health Service provider.\r\nStudents are expected to self-report positive test results from outside testing to ASU Health Services, which can be reached at 480-965-3349 or eoss.asu.edu/health.\r\nASU employees who know of a student who tests positive for COVID-19 must contact the Dean of Students office and ASU Health Services to notify them of the student\u2019s results.\r\nASU Health Services Exposure Management team will reach out directly to any student who tests positive to:\r\nEducate about self-isolation, the duration of which may vary depending on individual symptoms, severity of illness and personal health factors.\r\nProvide support, resources and referral information.\r\nClarify steps related to return to campus.\r\nIdentify any ASU close contacts (being less than 6 feet away for 10 minutes or more). Close contacts will receive a call or email from ASU Health Services letting them know they've been exposed to a person who has tested positive (without revealing the identity of that person), along with instructions related to quarantining for 14 days and resources for support, self-monitoring and testing. In addition, the Health Services team will seek consent to share the student's status as an exposed close contact with the Dean of Students office for additional support.",
+    "self_reporting": "If you test positive for COVID-19, your healthcare provider can contact ASU so we can follow-up with you and send an alert to those you may have been in contact with."
+}

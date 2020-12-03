@@ -1,0 +1,25 @@
+To run the code for Q2:
+
+`python3 bzhang28_HW2_Q2.py`
+
+
+A file named IL_employee_salary.csv is expected to be present in the same directory. 
+
+The python libraries `matplotlib` `numpy` are expected to be present. 
+For plots to show up a (matplotlib backend)[https://matplotlib.org/faq/usage_faq.html#what-is-a-backend] is expected
+to be present. 
+
+If no backend is present, you can install jupyter notebook, and run the attached bzhang28_HW2_Q2.ipynb to see the plots.
+
+One way to do so is to run with (poetry)[https://python-poetry.org/docs/]:
+
+```
+# install dependencies
+poetry install
+
+# use the virtualenv
+poetry shell
+
+# start up the notebook
+jupyter notebook
+```

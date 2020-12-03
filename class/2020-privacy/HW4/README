@@ -1,0 +1,32 @@
+Ensure that the following dependencies are installed:
+
+```
+pip install syft torch===1.4.0 torchvision===0.5.0 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+
+### Q1:
+
+To run the code for q1 run:
+
+```
+python3 bzhang28_HW4_Q1.py
+```
+
+### Q2:
+To run the code for q2 run:
+
+```
+python3 bzhang28_HW4_Q2.py
+```
+
+Note that this will run all the combinations given in the homework assignment and could take some time.
+
+
+### Q3:
+To run the code for q3 run with adult_data.txt in the same directory:
+
+```
+python3 bzhang28_HW4_Q3.py
+```
+

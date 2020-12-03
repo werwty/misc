@@ -1,0 +1,9 @@
+{
+    "urls": [
+        "https://covidrecovery.colostate.edu/wp-content/uploads/sites/28/2020/09/CONTACT-TRACING-EXPLAINED-final.pdf",
+        "https://covidrecovery.colostate.edu/daily-symptom-checker/"
+    ],
+    "app": false,
+    "contact_tracing": "Contact tracers reach out to those who may have been in contact\r\nwith the ill person or posive individual and gather info about the\r\nnature of the contact and potenal exposure.",
+    "self_reporting": "All students and employees should fill this checker out daily to report whether you have symptoms or not."
+}

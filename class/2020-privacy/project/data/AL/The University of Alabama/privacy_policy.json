@@ -1,0 +1,13 @@
+{
+  "privacy_policy": [
+    {
+      "policy_text": "Is UA Healthcheck secure? Is my privacy protected?\r\nUA Healthcheck is a HIPAA compliant platform. To access the tool, you will need to use your myBama login credentials.\r\n\r\nUA Healthcheck does not in any way track you as a person. It is a tool for you to report COVID-19 symptoms and any exposure. It does not track your location. UA Student Health, University Medical Center and Human Resources will receive the information to ensure those coming on campus are not showing symptoms.\r\n\r\nWill I remain anonymous?\r\nUA Student Health, University Medical Center and Human Resources will receive your information submitted with UA Healthcheck. The information is to ensure compliance and to identify employees or students who may need to be tested to further prevent the spread of COVID-19. How the App Protects Your Privacy \r\nIs GuideSafe™ Exposure Notification App secure? Is my privacy protected?\r\nThe GuideSafe™ Exposure Notification App protects your privacy while giving you the power to protect the health of yourself, your family, and your community. You control all data you want to share, and the decision to share it. GuideSafe™ Exposure Notification App does not collect identifying information such as your name, address, date of birth, contact information or specific location data. \r\n\r\nWill I remain anonymous?\r\nYes. The GuideSafe™ Exposure Notification App will not share your identity with any other users. \r\nIf I test positive for COVID-19, will my identity be shared with others I’ve come in contact with?\r\nNo. If you test positive you are not identified to other participants, or to Apple or Google. \r\nIf I’ve come in contact with someone who has tested positive for COVID-19 in the last 14 days, will their identity be shared with me?\r\nNo. All matching with other participants will be done through the exposure notification app on your device. Their identities will not be shared with you, Apple or Google.",
+      "url": "https://www.ua.edu/healthcheck/about",
+      "is_official":false,
+      "is_thirdparty": true,
+      "is_covid_specific": true
+    }
+  ],
+  "has_self_reporting_site": "https://www.ua.edu/healthcheck/",
+  "is_self_reporting_site_third_party": false
+}

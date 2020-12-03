@@ -1,0 +1,13 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "\nnformation supplied on this form is confidential and accessible only by UMW's COVID-19 Monitoring and Tracing Coordinator and essential UMW communications personnel. The University also is required to share confirmed cases of COVID-19 with the VDH. Once you report a new case, you will likely be contacted by the VDH, which may initiate contact tracing. Both UMW and VDH are committed to confidentiality.",
+            "url": "https://umw.co1.qualtrics.com/jfe/form/SV_5bicSN9KwCVxqQJ",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": true,
+    "is_self_reporting_site_third_party": false
+}

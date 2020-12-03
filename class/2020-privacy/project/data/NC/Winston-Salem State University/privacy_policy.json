@@ -1,0 +1,14 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "\n\nTo protect individuals\u2019 private health information, WSSU will not identify students or employees diagnosed with COVID-19. Additionally, as required, the University follows confidentiality guidelines and directives set forth in the\u202fFamily Educational Rights and Privacy Act (FERPA)\u202fand\u202fHealth Insurance Portability and Accountability Act of 1996 (HIPAA).",
+            "url": "https://www.wssu.edu/about/covid-connect/covid-19-case-dashboard.html",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": false,
+    "is_self_reporting_site_third_party": false,
+    "note": "no self-reporting, testing"
+}

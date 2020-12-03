@@ -1,0 +1,16 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "What information is needed for the form?\r\nYou need to report your temperature and any COVID-19-related symptoms you may be experiencing, such as a cough, chills, recent loss of taste or smell, etc. A checklist of symptoms is provided for you on the symptom checker form.\r\n\r\nPlease fill in all fields, including today\u2019s date, your temperature and any symptoms you may be experiencing. You may choose more than one symptom.\r\n\r\nYou do not have to report symptoms related to pre-existing conditions, other known conditions diagnosed by a doctor, such as an infection, or seasonal allergies.\r\nHow is the information that is submitted used?\r\nIf you submit a form without symptoms, your information is stored as completed as required. If you report symptoms, your information is provided to a CSU employee who is a public health professional. That employee will follow up with you and will provide you with public health guidance. You also will be provided with guidance and instructions immediately after reporting symptoms if you report via the electronic form.\r\n\r\nIf you are an employee, your supervisor also will be alerted that you have been instructed not to report to work, but your supervisor will not be provided with your medical information or details about your symptoms. You should still follow up with your supervisor if you report symptoms to alert them that you will not report to work.\r\n\r\nIf you are a student, Student Case Management will be alerted and they will follow up with you to assist you with any academic needs. If you live in university housing, University Housing and Dining is alerted.",
+            "url": "https://covidrecovery.colostate.edu/daily-symptom-checker/",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": [
+        "https://ramweb.colostate.edu/registrar/Public/DirectLink.aspx?Code=SymptomChecker",
+        "https://covidrecovery.colostate.edu/daily-symptom-checker/"
+    ],
+    "is_self_reporting_site_third_party": false
+}

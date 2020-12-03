@@ -1,0 +1,14 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "A standardized reporting process assures that appropriate information is requested and gathered. All data gathered will be confidential per the requirements of the Health Insurance Portability and Accountability Act of 1996 (HIPPA).",
+            "url": "https://www.wku.edu/healthyonthehill/reporting/",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": false,
+    "is_self_reporting_site_third_party": false,
+    "note": "Call the COVID-19 Hotline: 270-745-2019"
+}

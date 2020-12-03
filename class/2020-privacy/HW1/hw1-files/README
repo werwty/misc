@@ -1,0 +1,5 @@
+To run the script for hw1 Q1 run:
+
+`python3 bzhang28_HW1.py`
+
+This will print out the solution to parts a, b, c and d of HW1 to stdout

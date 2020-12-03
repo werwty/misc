@@ -1,0 +1,13 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "\n\nPlease note that this information is FERPA protected, and will only be shared with USCBschool officials with a legitimate educational interest. If you have questions about this form, please contact covid19@uscb.edu or (843)208-8099.",
+            "url": "https://cm.maxient.com/reportingform.php?UnivofSCBeaufort&layout_id=8",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": true,
+    "is_self_reporting_site_third_party": false
+}

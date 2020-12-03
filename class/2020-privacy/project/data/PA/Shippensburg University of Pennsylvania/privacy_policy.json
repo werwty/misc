@@ -1,0 +1,14 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": false,
+            "url": "http://www.ship.edu/coronavirus/",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": false
+        }
+    ],
+    "has_self_reporting_site": false,
+    "is_self_reporting_site_third_party": false,
+    "note": "self-reporting is via email"
+}

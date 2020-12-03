@@ -1,0 +1,14 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "UConn Health will see your results. You will have access to your results as well. A data file will be sent back to Human Resources with acknowledgment of your positive or negative test results. HR will utilize those results to work together with employees who test positive and will not be able to return to campus as planned, as well as notify your manager that you are unable to return to work. If you are already on campus, the manager must inform employees who have been identified as having been in close contact with an employee who has tested positive for COVID 19 and that they have been identified as an individual for whom there was sufficient contact to warrant notification. To the extent possible, this notification should be done by phone, but if this is not possible an email is sufficient. IMPORTANT: At no time should the identity of the co-worker ever be disclosed to any other co-workers; this information should remain confidential and only known to the manager and HR, unless the ill employee voluntarily discloses their status to co-workers.",
+            "url": "https://uconn.edu/public-notification/coronavirus/",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": false,
+    "is_self_reporting_site_third_party": false,
+    "note": "report via phone number 860-486-COVI or email covidquestions@uconn.edu"
+}

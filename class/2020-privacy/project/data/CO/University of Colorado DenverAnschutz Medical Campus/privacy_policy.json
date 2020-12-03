@@ -1,0 +1,13 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "All staff, faculty, and students are required to fill out this COVID-19 self-report form if they:\r\n\r\nHave had exposure to a COVID-19 confirmed case\r\nAre or have experienced COVID-19-like symptoms\r\nHave received a positive COVID-19 test result\r\nThis form will help us meet insurance and other safety requirements. This private information will only be used only during the COVID-19 pandemic to ensure:\r\n\r\nYou are covered as employees working off-site per supervisor approval, since we are not requiring signed Flex Workplace Agreements and\r\nWe are appropriately tracking staff, faculty and students affected by the COVID-19 pandemic, managing our work environment and pushing information out to you as needed\r\nThank you so much for your cooperation.",
+            "url": "https://ucdenverdata.formstack.com/forms/covid_form_copy",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": "https://ucdenverdata.formstack.com/forms/covid_form_copy",
+    "is_self_reporting_site_third_party": false
+}

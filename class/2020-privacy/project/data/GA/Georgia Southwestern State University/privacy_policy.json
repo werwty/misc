@@ -1,0 +1,13 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": false,
+            "url": "https://canesconnect.gsw.edu/privacy",
+            "is_official": true,
+            "is_thirdparty": false,
+            "is_covid_specific": false
+        }
+    ],
+    "has_self_reporting_site": "https://canesconnect.gsw.edu/submitter/form/collectsubmitteridentity/8d626987-daf8-4fa2-863c-dbc6e0ceb404",
+    "is_self_reporting_site_third_party": false
+}

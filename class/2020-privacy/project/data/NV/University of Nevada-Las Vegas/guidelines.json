@@ -1,0 +1,9 @@
+{
+    "app": null,
+    "contact_tracing": "\n        \nProvide as much detail as possible when you hear from contact tracers to assist them in notifying others who may be sick.\n\nIndividual health care providers are responsible for notifying the Southern Nevada Health District (SNHD) about all laboratory confirmed COVID-19 cases. SNHD coordinates contact tracing and provides guidance to close contacts \u2013 individuals who have been within six feet for 15 minutes or more \u2013 which may include their need to self-quarantine and get tested. The timing of the outreach may depend on the volume of caseloads public health officials are managing.\n\nWhen an individual is confirmed to have COVID-19, the Southern Nevada Health District determines who they may have had close contact with and guidance is provided directly to those individuals. Please know that if there is a need for anyone to be quarantined or tested, they will be contacted by either the Southern Nevada Health District and/or the UNLV Wellness Center.",
+    "self_reporting": "Individuals who test positive for COVID-19 may provide this information voluntarily to the university. It is strongly encouraged that any individual who tests positive completes the online reporting form or provides consent to someone to report on their behalf.",
+    "urls": [
+        "https://www.unlv.edu/coronavirus/students/reporting",
+        "https://www.unlv.edu/coronavirus/students/reporting"
+    ]
+}

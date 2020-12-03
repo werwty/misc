@@ -1,0 +1,9 @@
+{
+    "urls": [
+        "https://hilo.hawaii.edu/covid19/guidelines/documents/UHHiloCOVID-19InterimGuidelines.pdf",
+        "https://hilo.hawaii.edu/covid19/guidelines/institutional-safety-practices.php#screening"
+    ],
+    "app": false,
+    "contact_tracing": false,
+    "self_reporting": "The University will require all UH students and employees to complete NOVID Campus before arriving on campus. Any individual who refuses to complete screening will not be allowed onsite."
+}

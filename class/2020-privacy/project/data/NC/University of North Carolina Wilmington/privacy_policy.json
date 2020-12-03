@@ -1,0 +1,14 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "\nDue to HIPAA restrictions, private medical information will not be shared. Current CDC guidance indicates anyone feeling ill should plan to self-isolate/seek testing if they have had close contact (less than 6 feet) for a prolonged time (more than 15 minutes) with someone who has tested positive or is suspected of having COVID-19.",
+            "url": "https://uncw.edu/bestnest/faqs.html",
+            "is_official": false,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": false,
+    "is_self_reporting_site_third_party": false,
+    "note": "self-reporting via email"
+}

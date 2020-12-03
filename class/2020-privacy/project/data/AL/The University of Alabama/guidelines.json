@@ -1,0 +1,9 @@
+{
+    "urls": [
+        "https://www.ua.edu/healthcheck/",
+        "https://healthinfo.ua.edu/student-faqs/"
+    ],
+    "app": null,
+    "contact_tracing": "Close contact is defined as (1) anyone who spent at least 15 minutes within 6 feet of a COVID-19 positive or suspected COVID symptomatic individual while not wearing a mask (either you or the other individual or both); (2) anyone who has had frequent bodily contact with someone who is COVID-19 positive or who is experiencing symptoms of COVID-19; or (3) anyone having direct contact with secretions (e.g., cough, sneeze, etc.) of a COVID-19 positive individual or suspected COVID symptomatic individual.  Anyone who is a close contact and is experiencing symptoms consistent with COVID-19 will be treated as a suspected positive unless a negative test proves.",
+    "self_reporting": "Students, faculty and staff must share your current health status even if you are symptom free to ensure a safe return to campus."
+}

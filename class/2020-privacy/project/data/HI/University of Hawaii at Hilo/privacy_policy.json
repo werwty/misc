@@ -1,0 +1,14 @@
+{
+    "privacy_policy": [
+        {
+            "policy_text": "The university will not disclose the identity of any employee or student who is diagnosed with or is suspected of having COVID-19, except on a need-to-know basis. The university may also notify public health authorities if they learn that a student or employee has tested positive for COVID-19, and public health authorities have not already been notified, as this is a direct threat to public health.",
+            "url": "https://hilo.hawaii.edu/help/website-policies.php",
+            "is_official": true,
+            "is_thirdparty": false,
+            "is_covid_specific": true
+        }
+    ],
+    "has_self_reporting_site": false,
+    "is_self_reporting_site_third_party": false,
+    "note": "report by phone call"
+}

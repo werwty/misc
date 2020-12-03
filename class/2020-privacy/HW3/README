@@ -1,0 +1,36 @@
+To run the programs make sure the following packages are installed:
+
+`pip install tld matplotlib-venn adblockparser`
+
+
+Please ensure the following files are present in the top level directory
+
+- Tor_query_EXPORT-1.csv
+- www.cnn.com.har
+- easylist.txt
+- www.macys.com.har
+
+
+## Q2
+
+To Run the code for Q2:
+
+`python3 bzhang28_HW3_Q2.py` 
+
+Make sure a GUI based backend is availble ot matplotlib
+
+
+
+## Q3
+
+To run the code for Q3:
+`python3 bzhang28_HW3_Q3.py`
+
+
+## Q4 
+
+To run the code for Q4:
+`python3 bzhang28_HW3_Q4.py`
+
+Make sure a GUI based backend is availble ot matplotlib
+

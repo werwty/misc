@@ -1,0 +1,8 @@
+{
+    "app": "\n    Mobile app tools for COVID-19 symptom monitoring, or self-attestation, has become standard practice in workplace and congregate settings. For this purpose, the University of Montana has deployed a new tile on the CampusM App.\n\nIf you do not already have the CampusM App, we ask that you please download the newest version of it to your iPhone and Android mobile device (Search \u2018University of Montana\u2019 on Apple App Store or Google Playstore). We ask that you enable push notifications so that you can be reminded daily to respond to a single question on symptoms.\n\nTo ensure that we maintain a safe environment it is essential that all students, faculty and staff in the UM community participate in this daily self-reporting procedure. It is important to remember that this is only one of several personal responsibility tools that are essential for keeping our campus community safe. Other personal responsibility tools include wearing a mask, maintaining physical distancing, monitoring your temperature, disinfecting your deskspace and limiting your circle of contacts.\nDespite the continuing uncertainty of the COVID-19 pandemic, one clear message is that reducing the spread of disease requires that members of workplace and campus communities are constantly vigilant in monitoring their symptoms and, when indicated, removing themselves from further contact and seeking testing.",
+    "contact_tracing": null,
+    "self_reporting": null,
+    "urls": [
+        "https://www.umt.edu/umonline/keep_on_working/self-reporting.php"
+    ]
+}

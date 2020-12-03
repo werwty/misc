@@ -1,0 +1,9 @@
+{
+    "urls": [
+        "https://www.wcsu.edu/coronavirus/",
+        "https://www.wcsu.edu/healthservices/safe-return-to-campus-during-the-coronavirus-pandemic/"
+    ],
+    "app": false,
+    "contact_tracing": "The university will follow guidance from the CDC and CT State Department of Health regarding testing students for COVID-19 and contact tracing of students exposed to the virus.",
+    "self_reporting": "Report Covid-19 Illness or Potential Exposure\r\nIf you have been diagnosed or been exposed to COVID-19 please report it."
+}
